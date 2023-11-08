@@ -1,1 +1,1 @@
-{ "fra-0001" : { "title" : "My forest", "taxon" : null, "tags" : [  ], "route" : "index.xml" }, "franktsai" : { "title" : "Frank Tsai", "taxon" : "Person", "tags" : [  ], "route" : "franktsai.xml" } }
+{ "fra-0002" : { "title" : "Category", "taxon" : "Definition", "tags" : [  ], "route" : "fra-0002.xml" }, "fra-0001" : { "title" : "My forest", "taxon" : null, "tags" : [  ], "route" : "index.xml" }, "franktsai" : { "title" : "Frank Tsai", "taxon" : "Person", "tags" : [  ], "route" : "franktsai.xml" } }
