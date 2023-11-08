@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="forest.xsl"?>
+<tree expanded="true" show_heading="true" show_metadata="true" toc="false" root="true"><frontmatter> <anchor>108</anchor> <addr>fra-0001</addr>  <route>index.xml</route>  <authors><author>franktasi</author> </authors> <title>My forest</title> </frontmatter> <mainmatter><p>I'm growing my forest.</p></mainmatter> <backmatter><contributions/> <context/> <related/> <backlinks/> <references/></backmatter></tree>
