@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="forest.xsl"?>
+<tree expanded="true" show_heading="true" show_metadata="true" toc="false" root="false" taxon="Theorem"><frontmatter> <anchor>126</anchor> <addr>kan-0001</addr>  <route>kan-0001.xml</route> <date>November 9, 2023</date> <authors><author><link href="franktsai.xml" type="local">Frank Tsai</link></author> </authors>  </frontmatter> <mainmatter><p>If <tex>\mathcal{C}</tex> and <tex>\mathcal{C}</tex> are locally small, a right Kan extension <tex>F :  \mathcal{C}   \to   \mathcal{C}</tex> along ...</p></mainmatter> <backmatter><contributions/> <context/> <related/> <backlinks/> <references/></backmatter></tree>
