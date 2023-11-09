@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="forest.xsl"?>
 <tree expanded="true" show_heading="true" show_metadata="true" toc="false" root="false" taxon="Person"><frontmatter> <anchor>114</anchor> <addr>franktsai</addr>  <route>franktsai.xml</route>   <title>Frank Tsai</title> </frontmatter> <mainmatter><p>I am interested in categorical logic.</p></mainmatter> <backmatter><contributions><tree expanded="false" show_heading="true" show_metadata="true" toc="false" root="false" taxon="Theorem"><frontmatter> <anchor>116</anchor> <addr>kan-0001</addr>  <route>kan-0001.xml</route> <date>November 9, 2023</date> <authors><author><link href="franktsai.xml" type="local">Frank Tsai</link></author> </authors>  </frontmatter> <mainmatter><p>If <tex>\mathcal{D}</tex> and <tex>\mathcal{E}</tex> are locally small, a right Kan extension <tex>F :  \mathcal{C}   \to   \mathcal{E}</tex> along <tex>K :  \mathcal{C}   \to   \mathcal{D}</tex> is pointwise if and only if it can be computed by the limit formula.
-</p></mainmatter> </tree></contributions> <context/> <related/> <backlinks/> <references/></backmatter></tree>
+</p>  <iftex>    <block open="open"><headline>Proof</headline> Blah blah blah
+</block>  </iftex>{    <block open="open"><headline><strong>Proof</strong>.</headline> Blah blah blah
+</block>  }</mainmatter> </tree></contributions> <context/> <related/> <backlinks/> <references/></backmatter></tree>
