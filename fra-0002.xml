@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="forest.xsl"?>
-<tree expanded="true" show_heading="true" show_metadata="true" toc="false" root="false" taxon="Definition"><frontmatter> <anchor>112</anchor> <addr>fra-0002</addr>  <route>fra-0002.xml</route> <date>November 8, 2023</date> <authors><author><link href="franktsai.xml" type="local">Frank Tsai</link></author> </authors> <title>Category</title> </frontmatter> <mainmatter><p>A <em>category</em> consists of the following data:
-<begin>enumerate</begin><item/> A collection of objects
-<item/> A collection of morphisms
-<end>enumerate</end>Blah blah blah
-</p></mainmatter> <backmatter><contributions/> <context/> <related/> <backlinks/> <references/></backmatter></tree>
