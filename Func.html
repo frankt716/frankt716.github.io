@@ -649,7 +649,10 @@
 <div class="doc">
      Every function is a composite of its image restriction and
      its image inclusion. This is called an <i>epi-mono factorization</i>.
-     The name comes from category theory.
+     The name comes from category theory. Category theory deals with
+     "function like" thingies called <i>morphisms</i>. It's an important
+     subject of computer science that we sadly will not talk about
+     in this class.
  
 </div>
 <div class="code">
@@ -673,6 +676,23 @@
 <div class="doc">
 <a id="lab1"></a><h1 class="section">Homework problems</h1>
 
+    Tips:
+<ul class="doclist">
+<li> When appropriate, you should make use of theorems
+          in this module.
+
+</li>
+<li> You should gain the big picture (e.g., write an
+          informal proof) before you start working on the
+          Coq proof.
+
+</li>
+<li> The assignment does not require esoteric tactics
+          (e.g., <span class="inlinecode"><span class="id" title="tactic">pattern</span></span>, <span class="inlinecode"><span class="id" title="tactic">refine</span></span>, <span class="inlinecode"><span class="id" title="tactic">fold</span></span>, etc) that are
+          not discussed in class.
+
+</li>
+</ul>
  
 <div class="paragraph"> </div>
 
@@ -727,6 +747,29 @@
 <div class="code">
 <span class="id" title="keyword">Theorem</span> <span class="id" title="var">inv_then_sur</span> :<br/>
 &nbsp;&nbsp;<span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>), <span class="id" title="var">invertible</span> <span class="id" title="var">f</span> → <span class="id" title="var">surjective</span> <span class="id" title="var">f</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+   Show that every surjective function <span class="inlinecode"><span class="id" title="var">f</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">B</span></span>
+   is <i>extremal</i>. That is, for any function <span class="inlinecode"><span class="id" title="var">g</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">C</span></span>,
+   and any injective function <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">C</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">B</span></span>, if
+   <span class="inlinecode"><span class="id" title="var">comp</span></span> <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode"><span class="id" title="var">g</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">f</span></span> then <span class="inlinecode"><span class="id" title="var">g</span></span> is invertible.
+   Hint: <span class="inlinecode"><span class="id" title="var">bij_then_inv</span></span> may be useful.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">sur_extremal</span> :<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">surjective</span> <span class="id" title="var">f</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">C</span> (<span class="id" title="var">g</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">C</span>) (<span class="id" title="var">h</span> : <span class="id" title="var">Func</span> <span class="id" title="var">C</span> <span class="id" title="var">B</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">injective</span> <span class="id" title="var">h</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">comp</span> <span class="id" title="var">h</span> <span class="id" title="var">g</span> = <span class="id" title="var">f</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">invertible</span> <span class="id" title="var">h</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
 <span class="id" title="keyword">Abort</span>.<br/>
 
