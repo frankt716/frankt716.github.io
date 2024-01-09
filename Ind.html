@@ -21,11 +21,14 @@
 <div class="code">
 <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">Arith</span>.<br/>
 <span class="id" title="keyword">Module</span> <span class="id" title="keyword">Type</span> <span class="id" title="keyword">Induction</span>.<br/>
-
-<br/>
 </div>
 
 <div class="doc">
+<a id="lab2"></a><h1 class="section">Inductive data types and induction</h1>
+
+
+<div class="paragraph"> </div>
+
    The type of natural numbers is inductively defined by two rules:
 <ul class="doclist">
 <li> <span class="inlinecode"><span class="id" title="var">O</span></span> is a natural number
@@ -345,7 +348,7 @@
 </div>
 
 <div class="doc">
-<a id="lab2"></a><h1 class="section">Additional inductive data type examples</h1>
+<a id="lab3"></a><h1 class="section">Additional inductive data type examples</h1>
 
  
 <div class="paragraph"> </div>
@@ -403,12 +406,12 @@
 </div>
 
 <div class="doc">
-   We can prove that <span class="inlinecode"><span class="id" title="var">reverse</span></span> is <i>involutative</i>, i.e.,
+   We can prove that <span class="inlinecode"><span class="id" title="var">reverse</span></span> is <i>involutive</i>, i.e.,
    reversing a tree twice is the same as doing nothing.
  
 </div>
 <div class="code">
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">reverse_involutative</span> :<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">reverse_involutive</span> :<br/>
 &nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">t</span>, <span class="id" title="var">reverse</span> (<span class="id" title="var">reverse</span> <span class="id" title="var">t</span>) = <span class="id" title="var">t</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">t</span>.<br/>
@@ -958,7 +961,7 @@
 </div>
 
 <div class="doc">
-<a id="lab3"></a><h1 class="section">Additional strong induction examples</h1>
+<a id="lab4"></a><h1 class="section">Additional strong induction examples</h1>
 
  
 <div class="paragraph"> </div>
@@ -1218,7 +1221,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab4"></a><h1 class="section">Homework problems</h1>
+<a id="lab5"></a><h1 class="section">Homework problems</h1>
 
 <div class="paragraph"> </div>
 

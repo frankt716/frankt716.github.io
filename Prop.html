@@ -59,7 +59,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab5"></a><h1 class="section"><span class="inlinecode"><span class="id" title="var">True</span></span> introduction</h1>
+<a id="lab6"></a><h1 class="section"><span class="inlinecode"><span class="id" title="var">True</span></span> introduction</h1>
 
     The proposition <span class="inlinecode"><span class="id" title="var">True</span></span> does not contain any useful
     information. It is self evident, so its canonical
@@ -79,7 +79,7 @@
 </div>
 
 <div class="doc">
-<a id="lab6"></a><h1 class="section"><span class="inlinecode"><span class="id" title="var">False</span></span> elimination</h1>
+<a id="lab7"></a><h1 class="section"><span class="inlinecode"><span class="id" title="var">False</span></span> elimination</h1>
 
     Dually, there is no canonical proof of the proposition <span class="inlinecode"><span class="id" title="var">False</span></span>.
     That is, <span class="inlinecode"><span class="id" title="var">False</span></span> does not have an introduction rule.
@@ -99,7 +99,7 @@
 </div>
 
 <div class="doc">
-<a id="lab7"></a><h1 class="section"><span class="inlinecode">∧</span> introduction</h1>
+<a id="lab8"></a><h1 class="section"><span class="inlinecode">∧</span> introduction</h1>
 
     <span class="inlinecode">∧</span> is like a pair. If I have a proof <span class="inlinecode"><span class="id" title="var">p</span></span> of <span class="inlinecode"><span class="id" title="var">P</span></span> and a
     proof <span class="inlinecode"><span class="id" title="var">q</span></span> of <span class="inlinecode"><span class="id" title="var">Q</span></span>, then I can construct a proof <span class="inlinecode">(<span class="id" title="var">p</span>,</span> <span class="inlinecode"><span class="id" title="var">q</span>)</span> of
@@ -120,7 +120,7 @@
 </div>
 
 <div class="doc">
-<a id="lab8"></a><h1 class="section"><span class="inlinecode">∧</span> elimination</h1>
+<a id="lab9"></a><h1 class="section"><span class="inlinecode">∧</span> elimination</h1>
 
     Given a hypothesis <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> we can extract a proof of <span class="inlinecode"><span class="id" title="var">P</span></span>
     and a proof of <span class="inlinecode"><span class="id" title="var">Q</span></span>. When there is a hypothesis <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span>,
@@ -141,7 +141,7 @@
 </div>
 
 <div class="doc">
-<a id="lab9"></a><h1 class="section"><span class="inlinecode">∨</span> introduction</h1>
+<a id="lab10"></a><h1 class="section"><span class="inlinecode">∨</span> introduction</h1>
 
     A proof of <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> is either a proof of <span class="inlinecode"><span class="id" title="var">P</span></span> or a
     proof of <span class="inlinecode"><span class="id" title="var">Q</span></span>. If we want to prove <span class="inlinecode"><span class="id" title="var">P</span></span>, we can use
@@ -167,7 +167,7 @@
 </div>
 
 <div class="doc">
-<a id="lab10"></a><h1 class="section"><span class="inlinecode">∨</span> elimination</h1>
+<a id="lab11"></a><h1 class="section"><span class="inlinecode">∨</span> elimination</h1>
 
     Since <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> consists of either a proof of <span class="inlinecode"><span class="id" title="var">P</span></span> or
     a proof of <span class="inlinecode"><span class="id" title="var">Q</span></span>, Its canonical usage is case analysis.
@@ -191,7 +191,7 @@
 </div>
 
 <div class="doc">
-<a id="lab11"></a><h1 class="section"><span class="inlinecode">→</span> introduction</h1>
+<a id="lab12"></a><h1 class="section"><span class="inlinecode">→</span> introduction</h1>
 
     <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> is like a function that takes a proof of <span class="inlinecode"><span class="id" title="var">P</span></span>
     and outputs a proof of <span class="inlinecode"><span class="id" title="var">Q</span></span>. The canonical way to prove
@@ -212,7 +212,7 @@
 </div>
 
 <div class="doc">
-<a id="lab12"></a><h1 class="section"><span class="inlinecode">→</span> elimination</h1>
+<a id="lab13"></a><h1 class="section"><span class="inlinecode">→</span> elimination</h1>
 
     The canonical way to use a hypothesis <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> is
     modus ponens. It is (essentially) function application.
@@ -242,7 +242,7 @@
 </div>
 
 <div class="doc">
-<a id="lab13"></a><h1 class="section">Negation <span class="inlinecode">¬</span></h1>
+<a id="lab14"></a><h1 class="section">Negation <span class="inlinecode">¬</span></h1>
 
    Negation is not a primitive connective in Coq. It is defined in terms
    of <span class="inlinecode">→</span> and <span class="inlinecode"><span class="id" title="var">False</span></span> as follows:
@@ -280,7 +280,7 @@
 </div>
 
 <div class="doc">
-<a id="lab14"></a><h1 class="section">If and only if <span class="inlinecode">↔</span></h1>
+<a id="lab15"></a><h1 class="section">If and only if <span class="inlinecode">↔</span></h1>
 
    In Coq, the connective <span class="inlinecode">↔</span> is defined in terms of <span class="inlinecode">→</span> and <span class="inlinecode">∧</span>
    as follows:
@@ -311,7 +311,7 @@
 </div>
 
 <div class="doc">
-<a id="lab15"></a><h1 class="section"><span class="inlinecode"><span class="id" title="keyword">∀</span></span> introduction</h1>
+<a id="lab16"></a><h1 class="section"><span class="inlinecode"><span class="id" title="keyword">∀</span></span> introduction</h1>
 
    <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span>,</span> <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> is a function that takes <span class="inlinecode"><span class="id" title="var">x</span></span> to a proof of <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span>
    (<span class="inlinecode"><span class="id" title="var">x</span></span> has the property <span class="inlinecode"><span class="id" title="var">S</span></span>). The <span class="inlinecode"><span class="id" title="tactic">intros</span></span> tactic works.
@@ -330,7 +330,7 @@
 </div>
 
 <div class="doc">
-<a id="lab16"></a><h1 class="section"><span class="inlinecode"><span class="id" title="keyword">∀</span></span> elimination</h1>
+<a id="lab17"></a><h1 class="section"><span class="inlinecode"><span class="id" title="keyword">∀</span></span> elimination</h1>
 
     The canonical way to use a hypothesis <span class="inlinecode"><span class="id" title="var">f</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span>,</span> <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> is
     also function application.
@@ -369,7 +369,7 @@
 </div>
 
 <div class="doc">
-<a id="lab17"></a><h1 class="section"><span class="inlinecode"><span class="id" title="tactic">∃</span></span> introduction</h1>
+<a id="lab18"></a><h1 class="section"><span class="inlinecode"><span class="id" title="tactic">∃</span></span> introduction</h1>
 
     The canonical way to prove <span class="inlinecode"><span class="id" title="tactic">∃</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span>,</span> <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> is to find an example
     with property <span class="inlinecode"><span class="id" title="var">S</span></span>. We can use the <span class="inlinecode"><span class="id" title="tactic">∃</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> tactic to instantiate
@@ -389,7 +389,7 @@
 </div>
 
 <div class="doc">
-<a id="lab18"></a><h1 class="section"><span class="inlinecode"><span class="id" title="tactic">∃</span></span> elimination</h1>
+<a id="lab19"></a><h1 class="section"><span class="inlinecode"><span class="id" title="tactic">∃</span></span> elimination</h1>
 
     Given a hypothesis <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="tactic">∃</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span>,</span> <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span>, we can extract an
     element <span class="inlinecode"><span class="id" title="var">a'</span></span> of <span class="inlinecode"><span class="id" title="var">A</span></span> that we know nothing about other than
@@ -412,7 +412,7 @@
 </div>
 
 <div class="doc">
-<a id="lab19"></a><h1 class="section"><span class="inlinecode">=</span> introduction</h1>
+<a id="lab20"></a><h1 class="section"><span class="inlinecode">=</span> introduction</h1>
 
     The canonical way to prove <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">a</span></span> is <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span>.
     This requires the left-hand side and the right-hand
@@ -439,7 +439,7 @@
 </div>
 
 <div class="doc">
-<a id="lab20"></a><h1 class="section"><span class="inlinecode">=</span> elimination</h1>
+<a id="lab21"></a><h1 class="section"><span class="inlinecode">=</span> elimination</h1>
 
     The canonical way to use a hypothesis <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">b</span></span> is
     rewriting. We can <span class="inlinecode"><span class="id" title="tactic">rewrite</span></span> <span class="inlinecode"><span class="id" title="var">h</span></span> to replace all
@@ -476,7 +476,7 @@
 </div>
 
 <div class="doc">
-<a id="lab21"></a><h1 class="section">Homework problems</h1>
+<a id="lab22"></a><h1 class="section">Homework problems</h1>
 
  
 </div>
