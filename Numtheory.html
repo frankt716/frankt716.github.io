@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Numtheory</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Numtheory</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">ZArith</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">Psatz</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <span class="id" title="var">NumberTheory</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">Z_scope</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     In the induction module, we developed the <span class="inlinecode"><span class="id" title="var">nat</span></span> data type
+     and proved a number of theorems about this data type.
+     We are going to extend <span class="inlinecode"><span class="id" title="var">nat</span></span> with negative numbers,
+     yielding the data type of integers <span class="inlinecode"><span class="id" title="var">Z</span></span>. We are not
+     going to develop this data type from scratch. Instead,
+     we are going to develop an algorithm for the <span class="inlinecode"><span class="id" title="var">Z</span></span> data
+     type in this module.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Print</span> <span class="id" title="var">Z</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     A few relations on <span class="inlinecode"><span class="id" title="var">Z</span></span> have already been defined.
+     A particular relation that is of special interest
+     in this module is the <i>divisibility relation</i>.
+     An integer <span class="inlinecode"><span class="id" title="var">n</span></span> <i>divides</i> another integer <span class="inlinecode"><span class="id" title="var">m</span></span> if
+     <span class="inlinecode"><span class="id" title="tactic">∃</span></span> <span class="inlinecode"><span class="id" title="var">k</span>,</span> <span class="inlinecode"><span class="id" title="var">m</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">k</span></span> <span class="inlinecode">×</span> <span class="inlinecode"><span class="id" title="var">n</span></span>. This is usually written <span class="inlinecode">(<span class="id" title="var">n</span></span> <span class="inlinecode">|</span> <span class="inlinecode"><span class="id" title="var">m</span>)</span>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Print</span> <span class="id" title="var">Z.divide</span>.<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;Z.divide&nbsp;=&nbsp;fun&nbsp;x&nbsp;y&nbsp;:&nbsp;Z&nbsp;=&gt;&nbsp;exists&nbsp;z&nbsp;:&nbsp;Z,&nbsp;y&nbsp;=&nbsp;z&nbsp;*&nbsp;x<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Z&nbsp;-&gt;&nbsp;Z&nbsp;-&gt;&nbsp;Prop&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Besides the <span class="inlinecode">≤</span> relation on <span class="inlinecode"><span class="id" title="var">Z</span></span>, there are other
+     sensible ways to order integers. As it turns out
+     the divisibility relation on <span class="inlinecode"><span class="id" title="var">Z</span></span> is a sensible
+     notion of ordering on <span class="inlinecode"><span class="id" title="var">Z</span></span>. We are going to use
+     the divisibility relation heavily in this module.
+   
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+     The <i>greatest common divisor</i> of two integers
+     <span class="inlinecode"><span class="id" title="var">m</span></span> and <span class="inlinecode"><span class="id" title="var">n</span></span> is an integer <span class="inlinecode"><span class="id" title="var">k</span></span> so that
+<ul class="doclist">
+<li> <span class="inlinecode">(<span class="id" title="var">k</span></span> <span class="inlinecode">|</span> <span class="inlinecode"><span class="id" title="var">m</span>)</span>
+
+</li>
+<li> <span class="inlinecode">(<span class="id" title="var">k</span></span> <span class="inlinecode">|</span> <span class="inlinecode"><span class="id" title="var">n</span>)</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">k</span></span> is the "greatest" (with respect to the
+       divisibility relation) with the two properties
+       above, i.e., <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">k'</span>,</span> <span class="inlinecode">(<span class="id" title="var">k'</span></span> <span class="inlinecode">|</span> <span class="inlinecode"><span class="id" title="var">m</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" title="var">k'</span></span> <span class="inlinecode">|</span> <span class="inlinecode"><span class="id" title="var">n</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" title="var">k'</span></span> <span class="inlinecode">|</span> <span class="inlinecode"><span class="id" title="var">k</span>)</span>.
+
+</li>
+</ul>
+     We can define the <span class="inlinecode"><span class="id" title="var">is_gcd</span></span> relation as follows.
+     <span class="inlinecode"><span class="id" title="var">is_gcd</span></span> <span class="inlinecode"><span class="id" title="var">k</span></span> <span class="inlinecode"><span class="id" title="var">m</span></span> <span class="inlinecode"><span class="id" title="var">n</span></span> means <span class="inlinecode"><span class="id" title="var">k</span></span> is the gcd of <span class="inlinecode"><span class="id" title="var">m</span></span> and <span class="inlinecode"><span class="id" title="var">n</span></span>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Inductive</span> <span class="id" title="var">is_gcd</span> (<span class="id" title="var">k</span> : <span class="id" title="var">Z</span>) : <span class="id" title="var">Z</span> → <span class="id" title="var">Z</span> → <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <span class="id" title="var">gcd_k</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">m</span> <span class="id" title="var">n</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">k</span> | <span class="id" title="var">m</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">k</span> | <span class="id" title="var">n</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">∀</span> <span class="id" title="var">k'</span>, (<span class="id" title="var">k'</span> | <span class="id" title="var">m</span>) → (<span class="id" title="var">k'</span> | <span class="id" title="var">n</span>) → (<span class="id" title="var">k'</span> | <span class="id" title="var">k</span>)) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">is_gcd</span> <span class="id" title="var">k</span> <span class="id" title="var">m</span> <span class="id" title="var">n</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Facts about the <span class="inlinecode"><span class="id" title="var">is_gcd</span></span> relation.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <span class="id" title="var">is_gcd_sym</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">m</span> <span class="id" title="var">n</span> <span class="id" title="var">k</span>, <span class="id" title="var">is_gcd</span> <span class="id" title="var">k</span> <span class="id" title="var">m</span> <span class="id" title="var">n</span> → <span class="id" title="var">is_gcd</span> <span class="id" title="var">k</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">m</span> <span class="id" title="var">n</span> <span class="id" title="var">k</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">gcd_k</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">k'</span> <span class="id" title="var">div1</span> <span class="id" title="var">div2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">div2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">div1</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <span class="id" title="var">is_gcd_mod</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">k</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>, <span class="id" title="var">is_gcd</span> <span class="id" title="var">k</span> (<span class="id" title="var">a</span> <span class="id" title="var">mod</span> <span class="id" title="var">b</span>) <span class="id" title="var">b</span> → <span class="id" title="var">is_gcd</span> <span class="id" title="var">k</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">k</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">eq</span> := <span class="id" title="var">Z_div_mod_eq_full</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">eq'</span> : <span class="id" title="var">a</span> <span class="id" title="var">mod</span> <span class="id" title="var">b</span> = <span class="id" title="var">a</span> - (<span class="id" title="var">a</span> / <span class="id" title="var">b</span>) × <span class="id" title="var">b</span>) <span class="id" title="tactic">by</span> <span class="id" title="var">nia</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq'</span> <span class="id" title="tactic">in</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">generalize</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">generalize</span> (<span class="id" title="var">a</span> / <span class="id" title="var">b</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">gcd</span> <span class="id" title="var">eq</span> <span class="id" title="var">eq'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">z</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">gcd_k</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">c</span> <span class="id" title="var">eq</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">H0</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">c'</span> <span class="id" title="var">eq'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">c</span> + <span class="id" title="var">z</span> × <span class="id" title="var">c'</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">nia</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">k'</span> <span class="id" title="var">div1</span> <span class="id" title="var">div2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">Z.divide_sub_r</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">exact</span> <span class="id" title="var">div1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <span class="id" title="var">Z.divide_mul_r</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">div2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">div2</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <span class="id" title="var">is_gcd_sign</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">k</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>, <span class="id" title="var">is_gcd</span> <span class="id" title="var">k</span> (-<span class="id" title="var">a</span>) <span class="id" title="var">b</span> → <span class="id" title="var">is_gcd</span> <span class="id" title="var">k</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">k</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">gcd_k</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">Znumtheory.Zdivide_opp_r_rev</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">k'</span> <span class="id" title="var">div1</span> <span class="id" title="var">div2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">Znumtheory.Zdivide_opp_r</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">div1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">div2</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <span class="id" title="var">is_gcd_zero_n</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="var">is_gcd</span> <span class="id" title="var">n</span> 0 <span class="id" title="var">n</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">gcd_k</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">∃</span> 0.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">∃</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">Z.mul_1_l</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">k'</span> <span class="id" title="var">_</span> <span class="id" title="var">div</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">div</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Given two integers <span class="inlinecode"><span class="id" title="var">a</span></span> and <span class="inlinecode"><span class="id" title="var">b</span></span>, we can compute a gcd of
+     these two integers as follows: <span class="inlinecode"><span class="id" title="var">is_gcd_zero_n</span></span> and
+     <span class="inlinecode"><span class="id" title="var">is_gcd_sym</span></span> tell us that if either <span class="inlinecode"><span class="id" title="var">a</span></span> (resp., <span class="inlinecode"><span class="id" title="var">b</span></span>) is
+     <span class="inlinecode">0</span>, then <span class="inlinecode"><span class="id" title="var">b</span></span> (resp., <span class="inlinecode"><span class="id" title="var">a</span></span>) is a gcd of these two numbers.
+     <span class="inlinecode"><span class="id" title="var">is_gcd_mod</span></span> tells us how to reduce one of the arguments
+     towards <span class="inlinecode">0</span>. For example, here is one way to compute
+     <span class="inlinecode"><span class="id" title="var">gcd</span>(10,</span> <span class="inlinecode">6)</span>:
+<ul class="doclist">
+<li> <span class="inlinecode"><span class="id" title="var">gcd</span>(10,</span> <span class="inlinecode">6)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">gcd</span>(10</span> <span class="inlinecode"><span class="id" title="var">mod</span></span> <span class="inlinecode">6,</span> <span class="inlinecode">6)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">gcd</span>(4,</span> <span class="inlinecode">6)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">gcd</span>(6,</span> <span class="inlinecode">4)</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">gcd</span>(6</span> <span class="inlinecode"><span class="id" title="var">mod</span></span> <span class="inlinecode">4,</span> <span class="inlinecode">4)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">gcd</span>(2,</span> <span class="inlinecode">4)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">gcd</span>(4,</span> <span class="inlinecode">2)</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">gcd</span>(4,</span> <span class="inlinecode">2)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">gcd</span>(4</span> <span class="inlinecode"><span class="id" title="var">mod</span></span> <span class="inlinecode">2,</span> <span class="inlinecode">2)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">gcd</span>(0,</span> <span class="inlinecode">2)</span> <span class="inlinecode">=</span> <span class="inlinecode">2</span>
+
+</li>
+</ul>
+   
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+     We can implement (a variant of) this algorithm in Coq.
+     This is not a trivial algorithm so don't worry about it.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Inductive</span> <span class="id" title="var">gcd_sig</span> (<span class="id" title="var">a</span> <span class="id" title="var">b</span> : <span class="id" title="var">Z</span>) : <span class="id" title="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;| <span class="id" title="var">gcd_sig_k</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">u</span> <span class="id" title="var">v</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">is_gcd</span> (<span class="id" title="var">u</span> × <span class="id" title="var">a</span> + <span class="id" title="var">v</span> × <span class="id" title="var">b</span>) <span class="id" title="var">a</span> <span class="id" title="var">b</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">gcd_sig</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">gcd_sig_comp'</span> (<span class="id" title="var">a</span> <span class="id" title="var">b</span> : <span class="id" title="var">Z</span>) :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">u3</span> <span class="id" title="var">v3</span> : <span class="id" title="var">Z</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 ≤ (<span class="id" title="var">u3</span> × <span class="id" title="var">a</span> + <span class="id" title="var">v3</span> × <span class="id" title="var">b</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">u1</span> <span class="id" title="var">v1</span> <span class="id" title="var">u2</span> <span class="id" title="var">v2</span> : <span class="id" title="var">Z</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">u2</span> × <span class="id" title="var">a</span> + <span class="id" title="var">v2</span> × <span class="id" title="var">b</span> = <span class="id" title="var">u3</span> × <span class="id" title="var">a</span> + <span class="id" title="var">v3</span> × <span class="id" title="var">b</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">∀</span> <span class="id" title="var">k</span> : <span class="id" title="var">Z</span>, <span class="id" title="var">is_gcd</span> <span class="id" title="var">k</span> (<span class="id" title="var">u3</span> × <span class="id" title="var">a</span> + <span class="id" title="var">v3</span> × <span class="id" title="var">b</span>) (<span class="id" title="var">u1</span> × <span class="id" title="var">a</span> + <span class="id" title="var">v1</span> × <span class="id" title="var">b</span>)  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">is_gcd</span> <span class="id" title="var">k</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">gcd_sig</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;some&nbsp;Coq&nbsp;magic...&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">gcd_sig_comp</span> (<span class="id" title="var">a</span> <span class="id" title="var">b</span> : <span class="id" title="var">Z</span>) : <span class="id" title="var">gcd_sig</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">Z_le_gt_dec</span> 0 <span class="id" title="var">a</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">le</span> | <span class="id" title="var">gt</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">gcd_sig_comp'</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">u3</span> := 1)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">v3</span> := 0)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">u1</span> := 0)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">v1</span> := 1)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">u2</span> := 1)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">v2</span> := 0).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">nia</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">k</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">eq</span> : 1 × <span class="id" title="var">a</span> + 0 × <span class="id" title="var">b</span> = <span class="id" title="var">a</span>) <span class="id" title="tactic">by</span> <span class="id" title="tactic">ring</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">eq'</span> : 0 × <span class="id" title="var">a</span> + 1 × <span class="id" title="var">b</span> = <span class="id" title="var">b</span>) <span class="id" title="tactic">by</span> <span class="id" title="tactic">ring</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span> <span class="id" title="tactic">in</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq'</span> <span class="id" title="tactic">in</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">gcd_sig_comp'</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">u3</span> := -1)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">v3</span> := 0)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">u1</span> := 0)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">v1</span> := 1)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">u2</span> := -1)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">v2</span> := 0).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">nia</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">k</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">is_gcd_sign</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">eq</span> : -1 × <span class="id" title="var">a</span> + 0 × <span class="id" title="var">b</span> = -<span class="id" title="var">a</span>) <span class="id" title="tactic">by</span> <span class="id" title="tactic">ring</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">eq'</span> : 0 × <span class="id" title="var">a</span> + 1 × <span class="id" title="var">b</span> = <span class="id" title="var">b</span>) <span class="id" title="tactic">by</span> <span class="id" title="tactic">ring</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span> <span class="id" title="tactic">in</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq'</span> <span class="id" title="tactic">in</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">gcd</span> (<span class="id" title="var">a</span> <span class="id" title="var">b</span> : <span class="id" title="var">Z</span>) : <span class="id" title="var">Z</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">gcd_sig_comp</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">gcd_sig_k</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">u</span> <span class="id" title="var">v</span> <span class="id" title="var">_</span> ⇒ <span class="id" title="var">u</span> × <span class="id" title="var">a</span> + <span class="id" title="var">v</span> × <span class="id" title="var">b</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Goal</span> (<span class="id" title="var">gcd</span> 1 3 = 1).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">gcd</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">gcd_sig_comp'</span>; <span class="id" title="var">cbn</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">Z_zerop</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Close</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">Z_scope</span>.<br/>
+<span class="id" title="keyword">End</span> <span class="id" title="var">NumberTheory</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
