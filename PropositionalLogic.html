@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>PropositionalLogic</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">PropositionalLogic</h1>
+
+<div class="code">
+<span class="id" title="keyword">Section</span> <span class="id" title="var">PropositionalLogic</span>.<br/>
+<span class="id" title="keyword">Variables</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">R</span> : <span class="id" title="keyword">Prop</span>.<br/>
+<span class="id" title="keyword">Let</span> <span class="id" title="var">reset_point</span> := <span class="id" title="var">I</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab23"></a><h1 class="section">Propositional logic</h1>
+
+ 
+<div class="paragraph"> </div>
+
+<a id="lab24"></a><h2 class="section">Formal language of propositional logic</h2>
+
+    The formal language is very simple:
+<ul class="doclist">
+<li> <span class="inlinecode"><span class="id" title="var">True</span></span> is a proposition.
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">False</span></span> is a proposition.
+
+</li>
+<li> any propositional variable <span class="inlinecode"><span class="id" title="var">P</span></span> is a proposition.
+
+</li>
+<li> if <span class="inlinecode"><span class="id" title="var">P</span></span> and <span class="inlinecode"><span class="id" title="var">Q</span></span> are propositions, then <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> is a proposition
+
+</li>
+<li> if <span class="inlinecode"><span class="id" title="var">P</span></span> and <span class="inlinecode"><span class="id" title="var">Q</span></span> are propositions, then <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> is a proposition
+
+</li>
+<li> if <span class="inlinecode"><span class="id" title="var">P</span></span> and <span class="inlinecode"><span class="id" title="var">Q</span></span> are propositions, then <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> is a proposition
+
+</li>
+</ul>
+ 
+<div class="paragraph"> </div>
+
+<a id="lab25"></a><h3 class="section">Reading propositions</h3>
+
+    The symbols <span class="inlinecode"><span class="id" title="var">True</span></span>, <span class="inlinecode"><span class="id" title="var">False</span></span>, <span class="inlinecode">∧</span>, <span class="inlinecode">∨</span>, and <span class="inlinecode">→</span> are called
+    <i>logical symbols</i> and <span class="inlinecode">∧</span>, <span class="inlinecode">∨</span>, and <span class="inlinecode">→</span> are also called
+    <i>logical connectives</i> because they connect multiple propositions
+    to form a compound proposition. We read propositions from left
+    to right according to the following rules:
+<ul class="doclist">
+<li> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">R</span></span> is read as <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode">(<span class="id" title="var">Q</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">R</span>)</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">R</span></span> is read as <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode">(<span class="id" title="var">Q</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">R</span>)</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">R</span></span> is read as <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" title="var">Q</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">R</span>)</span>
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+    The precedence of these connectives from highest
+    to lowest:
+<ul class="doclist">
+<li> <span class="inlinecode">∧</span> and <span class="inlinecode">∨</span> have the same precedence
+
+</li>
+<li> <span class="inlinecode">→</span>
+
+</li>
+</ul>
+    Examples:
+<ul class="doclist">
+<li> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">R</span></span> is read as <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode">(<span class="id" title="var">Q</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">R</span>)</span>.
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">R</span></span> is read as <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode">(<span class="id" title="var">Q</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">R</span>)</span>.
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">R</span></span> is read as <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" title="var">Q</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">R</span>)</span>.
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">R</span></span> is read as <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" title="var">Q</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">R</span>)</span>.
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">R</span></span> is read as <span class="inlinecode">(<span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">R</span></span>.
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">R</span></span> is read as <span class="inlinecode">(<span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">Q</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">R</span></span>.
+
+</li>
+</ul>
+ 
+<div class="paragraph"> </div>
+
+<a id="lab26"></a><h1 class="section">Derivation rules</h1>
+
+    Logical symbols by themselves are not meaningful.
+    The meanings of these symbols are given by their
+   <i>canonical proofs</i> (introduction rules) and by
+   their <i>canonical usage</i> (elimination rules).
+ 
+<div class="paragraph"> </div>
+
+<a id="lab27"></a><h2 class="section"><span class="inlinecode"><span class="id" title="var">True</span></span> introduction</h2>
+
+    The proposition <span class="inlinecode"><span class="id" title="var">True</span></span> does not contain any useful
+    information. It is self evident, so its canonical
+    proof is trivial. Since it does not contain any
+    useful information, it can't be used in any meaningful
+    way, i.e., <span class="inlinecode"><span class="id" title="var">True</span></span> does not have an elimination rule.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">trivial</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab28"></a><h2 class="section"><span class="inlinecode"><span class="id" title="var">False</span></span> elimination</h2>
+
+    Dually, there is no canonical proof of the proposition <span class="inlinecode"><span class="id" title="var">False</span></span>.
+    That is, <span class="inlinecode"><span class="id" title="var">False</span></span> does not have an introduction rule.
+    However, it has a very strong elimination rule: a false
+    hypothesis entails anything.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">false_hypothesis</span> : <span class="id" title="var">False</span>).<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">P</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab29"></a><h2 class="section"><span class="inlinecode">∧</span> introduction</h2>
+
+    <span class="inlinecode">∧</span> is a pair. If I have a proof <span class="inlinecode"><span class="id" title="var">p</span></span> of <span class="inlinecode"><span class="id" title="var">P</span></span> and a
+    proof <span class="inlinecode"><span class="id" title="var">q</span></span> of <span class="inlinecode"><span class="id" title="var">Q</span></span>, then I can construct a proof <span class="inlinecode">(<span class="id" title="var">p</span>,</span> <span class="inlinecode"><span class="id" title="var">q</span>)</span> of
+    <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span>. In other words, to prove <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span>, it suffices to
+    prove <span class="inlinecode"><span class="id" title="var">P</span></span> and <span class="inlinecode"><span class="id" title="var">Q</span></span> separately. When the goal is of the
+    form <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span>, we can use the <span class="inlinecode"><span class="id" title="tactic">split</span></span> tactic.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;proof&nbsp;of&nbsp;<span class="inlinecode"><span class="id" title="var">P</span></span>&nbsp;and&nbsp;<span class="inlinecode"><span class="id" title="var">Q</span></span>&nbsp;*)</span><br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab30"></a><h2 class="section"><span class="inlinecode">∧</span> elimination</h2>
+
+    Given a hypothesis <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> we can extract a proof of <span class="inlinecode"><span class="id" title="var">P</span></span>
+    and a proof of <span class="inlinecode"><span class="id" title="var">Q</span></span>. When there is a hypothesis <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span>,
+    we can use <span class="inlinecode"><span class="id" title="tactic">destruct</span></span> <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode"><span class="id" title="keyword">as</span></span> <span class="inlinecode">[<span class="id" title="var">p</span></span> <span class="inlinecode"><span class="id" title="var">q</span>]</span> to extract the two elements.
+    Here, <span class="inlinecode"><span class="id" title="var">p</span></span> and <span class="inlinecode"><span class="id" title="var">q</span></span> can be any arbitrary fresh names.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">h</span> : <span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span>).<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">R</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">h</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">p</span> <span class="id" title="var">q</span>].<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;We&nbsp;now&nbsp;have&nbsp;a&nbsp;proof&nbsp;of&nbsp;<span class="inlinecode"><span class="id" title="var">P</span></span>&nbsp;and&nbsp;a&nbsp;proof&nbsp;of&nbsp;<span class="inlinecode"><span class="id" title="var">Q</span></span>&nbsp;in&nbsp;the&nbsp;context&nbsp;*)</span><br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab31"></a><h2 class="section"><span class="inlinecode">∨</span> introduction</h2>
+
+    A proof of <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> is either a proof of <span class="inlinecode"><span class="id" title="var">P</span></span> or a
+    proof of <span class="inlinecode"><span class="id" title="var">Q</span></span>. If we want to prove <span class="inlinecode"><span class="id" title="var">P</span></span>, we can use
+    <span class="inlinecode"><span class="id" title="tactic">left</span></span>. For <span class="inlinecode"><span class="id" title="var">Q</span></span>, we can use <span class="inlinecode"><span class="id" title="tactic">right</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">left</span>.<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;proof&nbsp;of&nbsp;<span class="inlinecode"><span class="id" title="var">P</span></span>&nbsp;*)</span><br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">right</span>.<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;proof&nbsp;of&nbsp;<span class="inlinecode"><span class="id" title="var">Q</span></span>&nbsp;*)</span><br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab32"></a><h2 class="section"><span class="inlinecode">∨</span> elimination</h2>
+
+    Since <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> consists of either a proof of <span class="inlinecode"><span class="id" title="var">P</span></span> or
+    a proof of <span class="inlinecode"><span class="id" title="var">Q</span></span>, Its canonical usage is case analysis.
+    This is similar to the <code>if b then c1 else c2 </code> construct
+    in many programming languages: if <code>b </code> is <code>true </code> then do
+    <code>c1 </code> else do <code>c2 </code>. Given a hypothesis <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">Q</span></span>, we
+    can use <span class="inlinecode"><span class="id" title="tactic">destruct</span></span> <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode"><span class="id" title="keyword">as</span></span> <span class="inlinecode">[<span class="id" title="var">p</span></span> <span class="inlinecode">|</span> <span class="inlinecode"><span class="id" title="var">q</span>]</span> to do a case analysis on <span class="inlinecode"><span class="id" title="var">h</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">h</span> : <span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>).<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">R</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">h</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">p</span> | <span class="id" title="var">q</span>].<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;A&nbsp;proof&nbsp;of&nbsp;<span class="inlinecode"><span class="id" title="var">R</span></span>&nbsp;assuming&nbsp;<span class="inlinecode"><span class="id" title="var">P</span></span>&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;and&nbsp;a&nbsp;proof&nbsp;of&nbsp;<span class="inlinecode"><span class="id" title="var">R</span></span>&nbsp;assuming&nbsp;<span class="inlinecode"><span class="id" title="var">Q</span></span>&nbsp;*)</span><br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab33"></a><h2 class="section"><span class="inlinecode">→</span> introduction</h2>
+
+    <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> is like a function that takes a proof of <span class="inlinecode"><span class="id" title="var">P</span></span>
+    and outputs a proof of <span class="inlinecode"><span class="id" title="var">Q</span></span>. The canonical way to prove
+    <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> is to assume <span class="inlinecode"><span class="id" title="var">P</span></span> and prove <span class="inlinecode"><span class="id" title="var">Q</span></span>. We can use
+    <span class="inlinecode"><span class="id" title="tactic">intros</span></span> <span class="inlinecode"><span class="id" title="var">p</span></span> to assume a new hypothesis <span class="inlinecode"><span class="id" title="var">P</span></span>. Here,
+    <span class="inlinecode"><span class="id" title="var">p</span></span> can be any fresh name.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">P</span> → <span class="id" title="var">Q</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;Now,&nbsp;<span class="inlinecode"><span class="id" title="var">P</span></span>&nbsp;is&nbsp;a&nbsp;hypothesis.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab34"></a><h2 class="section"><span class="inlinecode">→</span> elimination</h2>
+
+    The canonical way to use a hypothesis <span class="inlinecode"><span class="id" title="var">h</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> is
+    modus ponens. It is (essentially) function application.
+    We can use <span class="inlinecode"><span class="id" title="tactic">apply</span></span> <span class="inlinecode"><span class="id" title="var">f</span></span> to apply a function.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">f</span> : <span class="id" title="var">P</span> → <span class="id" title="var">Q</span>).<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">Q</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;Now&nbsp;Coq&nbsp;demands&nbsp;us&nbsp;to&nbsp;provide&nbsp;an&nbsp;input&nbsp;to&nbsp;the&nbsp;function&nbsp;*)</span><br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;If&nbsp;there&nbsp;is&nbsp;a&nbsp;hypothesis&nbsp;<span class="inlinecode"><span class="id" title="var">p</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">P</span></span>,&nbsp;you&nbsp;can&nbsp;apply&nbsp;the&nbsp;function&nbsp;<span class="inlinecode"><span class="id" title="var">f</span></span><br/>
+&nbsp;to&nbsp;that&nbsp;hypothesis&nbsp;by&nbsp;<span class="inlinecode"><span class="id" title="tactic">apply</span></span> <span class="inlinecode"><span class="id" title="var">f</span></span> <span class="inlinecode"><span class="id" title="tactic">in</span></span> <span class="inlinecode"><span class="id" title="var">p</span></span>.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">p</span> : <span class="id" title="var">P</span>).<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">Q</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span> <span class="id" title="tactic">in</span> <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">p</span></span>&nbsp;is&nbsp;now&nbsp;the&nbsp;result&nbsp;of&nbsp;applying&nbsp;the&nbsp;function&nbsp;<span class="inlinecode"><span class="id" title="var">f</span></span>&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab35"></a><h2 class="section">Negation <span class="inlinecode">¬</span></h2>
+
+   Negation is not a primitive connective in Coq. It is defined in terms
+   of <span class="inlinecode">→</span> and <span class="inlinecode"><span class="id" title="var">False</span></span> as follows:
+   <br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;¬<span class="id" title="var">P</span> := (<span class="id" title="var">P</span> → <span class="id" title="var">False</span>)
+<div class="paragraph"> </div>
+
+</span>   We can use the <span class="inlinecode"><span class="id" title="tactic">unfold</span></span> tactic to unfold any (transparent) definition
+   in the goal. If you want to unfold <span class="inlinecode">¬</span> in a hypothesis <span class="inlinecode"><span class="id" title="var">h</span></span>, you can use
+   <span class="inlinecode"><span class="id" title="tactic">unfold</span></span> <span class="inlinecode"><span class="id" title="var">not</span></span> <span class="inlinecode"><span class="id" title="tactic">in</span></span> <span class="inlinecode"><span class="id" title="var">h</span></span>. Negation has the highest precedence, i.e., <span class="inlinecode">¬</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span>
+   should be read as <span class="inlinecode">(~</span> <span class="inlinecode"><span class="id" title="var">P</span>)</span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">Q</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Goal</span> ¬ <span class="id" title="var">P</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>.<br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">h</span> : ¬ <span class="id" title="var">P</span>).<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">R</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span> <span class="id" title="tactic">in</span> <span class="id" title="var">h</span>.<br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;Alternatively,&nbsp;you&nbsp;can&nbsp;use&nbsp;<span class="inlinecode"><span class="id" title="tactic">unfold</span></span> <span class="inlinecode">&quot;~&quot;</span>.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">R</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> "~" <span class="id" title="tactic">in</span> <span class="id" title="var">h</span>.<br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab36"></a><h2 class="section">If and only if <span class="inlinecode">↔</span></h2>
+
+   In Coq, the connective <span class="inlinecode">↔</span> is defined in terms of <span class="inlinecode">→</span> and <span class="inlinecode">∧</span>
+   as follows:
+   <br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;<span class="id" title="var">P</span> ↔ <span class="id" title="var">Q</span> := (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span>) ∧ (<span class="id" title="var">Q</span> → <span class="id" title="var">P</span>)
+<div class="paragraph"> </div>
+
+</span>   We can use the <span class="inlinecode"><span class="id" title="tactic">unfold</span></span> tactic to unfold its definition. We say
+   that <span class="inlinecode"><span class="id" title="var">P</span></span> and <span class="inlinecode"><span class="id" title="var">Q</span></span> are <i>logically equivalent</i> if <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">↔</span> <span class="inlinecode"><span class="id" title="var">Q</span></span> holds.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">P</span> ↔ <span class="id" title="var">Q</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> "&lt;-&gt;".<br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;You&nbsp;can&nbsp;also&nbsp;use&nbsp;the&nbsp;<span class="inlinecode"><span class="id" title="tactic">split</span></span>&nbsp;tactic&nbsp;directly&nbsp;since&nbsp;Coq<br/>
+&nbsp;knows&nbsp;the&nbsp;definition&nbsp;of&nbsp;"&lt;-&gt;".&nbsp;*)</span><br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">P</span> ↔ <span class="id" title="var">Q</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab37"></a><h1 class="section">Examples</h1>
+
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Reset</span> <span class="id" title="var">reset_point</span>.<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">curry_uncurry</span> : (<span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span> → <span class="id" title="var">R</span>) ↔ (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span> → <span class="id" title="var">R</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">h</span> <span class="id" title="var">p</span> <span class="id" title="var">q</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> <span class="id" title="var">q</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">and_uni</span> : (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span> ∧ <span class="id" title="var">R</span>) ↔ (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span>) ∧ (<span class="id" title="var">P</span> → <span class="id" title="var">R</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">h</span> <span class="id" title="tactic">in</span> <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">p</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">q</span> <span class="id" title="var">r</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">h</span> <span class="id" title="tactic">in</span> <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">p</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">q</span> <span class="id" title="var">r</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">h</span> <span class="id" title="var">h'</span>] <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">h'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">modus_tollen</span> : (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span>) → ¬ <span class="id" title="var">Q</span> → ¬ <span class="id" title="var">P</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">h</span> <span class="id" title="var">nq</span> <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">nq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">resolution</span> : (<span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>) → (~ <span class="id" title="var">P</span> ∨ <span class="id" title="var">R</span>) → <span class="id" title="var">Q</span> ∨ <span class="id" title="var">R</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> | <span class="id" title="var">q</span>].<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">np</span> | <span class="id" title="var">r</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">contradiction</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">np</span> | <span class="id" title="var">r</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">left</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <span class="id" title="var">PropositionalLogic</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
