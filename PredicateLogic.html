@@ -22,14 +22,14 @@
 </div>
 
 <div class="doc">
-<a id="lab6"></a><h1 class="section">Predicate logic</h1>
+<a id="lab6"></a><h1 class="section">Predicate logic with equality</h1>
 
  
 <div class="paragraph"> </div>
 
  Formal language
 <ul class="doclist">
-<li> Logical symbols: <span class="inlinecode"><span class="id" title="var">True</span></span>, <span class="inlinecode"><span class="id" title="var">False</span></span>, <span class="inlinecode">∧</span>, <span class="inlinecode">∨</span>, <span class="inlinecode">→</span>, <span class="inlinecode"><span class="id" title="keyword">∀</span></span>, <span class="inlinecode"><span class="id" title="tactic">∃</span></span>.
+<li> Logical symbols: <span class="inlinecode"><span class="id" title="var">True</span></span>, <span class="inlinecode"><span class="id" title="var">False</span></span>, <span class="inlinecode">∧</span>, <span class="inlinecode">∨</span>, <span class="inlinecode">→</span>, <span class="inlinecode"><span class="id" title="keyword">∀</span></span>, <span class="inlinecode"><span class="id" title="tactic">∃</span></span>, and <span class="inlinecode">=</span>.
 
 </li>
 <li> Predicate symbols: P, Q, R, etc
@@ -53,11 +53,9 @@
 
 </li>
 <li> Variables: <span class="inlinecode"><span class="id" title="var">x</span></span>, <span class="inlinecode"><span class="id" title="var">y</span></span>, <span class="inlinecode"><span class="id" title="var">z</span></span>, etc
-<ul class="doclist">
-<li> variables denote individuals
 
 </li>
-</ul>
+<li> Terms: variables and constants are terms
 
 </li>
 <li> Formulas:
@@ -95,6 +93,9 @@
 </li>
 </ul>
         are formulas.
+
+</li>
+<li> If <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> and <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span>, then <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">b</span></span> is a formula.
 
 </li>
 </ul>
@@ -168,11 +169,55 @@
 </li>
 </ul>
  
+<div class="paragraph"> </div>
+
+<a id="lab9"></a><h1 class="section"><span class="inlinecode">=</span> (logic: equality)</h1>
+
+<ul class="doclist">
+<li> Introduction: Given <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span>, we have <span class="inlinecode"><span class="id" title="var">refl</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">a</span></span>.
+
+</li>
+<li> Elimination: Given <span class="inlinecode"><span class="id" title="var">eq</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">b</span></span>, we can replace every <span class="inlinecode"><span class="id" title="var">b</span></span>
+                   with <span class="inlinecode"><span class="id" title="var">a</span></span>.
+
+</li>
+</ul>
+ 
 </div>
 <div class="code">
 
 <br/>
 <span class="id" title="keyword">Section</span> <span class="id" title="var">PredicateLogic</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">eq_symmetric</span> :<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">A</span> : <span class="id" title="keyword">Set</span>) (<span class="id" title="var">a</span> <span class="id" title="var">b</span> : <span class="id" title="var">A</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">a</span> = <span class="id" title="var">b</span> → <span class="id" title="var">b</span> = <span class="id" title="var">a</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">eq_transitive</span> :<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">A</span> : <span class="id" title="keyword">Set</span>) (<span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> : <span class="id" title="var">A</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">a</span> = <span class="id" title="var">b</span> → <span class="id" title="var">b</span> = <span class="id" title="var">c</span> → <span class="id" title="var">a</span> = <span class="id" title="var">c</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> <span class="id" title="var">eq1</span> <span class="id" title="var">eq2</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">eq1</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">eq2</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">transport</span> :<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">A</span> : <span class="id" title="keyword">Set</span>) (<span class="id" title="var">a</span> <span class="id" title="var">b</span> : <span class="id" title="var">A</span>) (<span class="id" title="var">P</span> : <span class="id" title="var">A</span> → <span class="id" title="keyword">Prop</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">a</span> = <span class="id" title="var">b</span> → <span class="id" title="var">P</span> <span class="id" title="var">a</span> → <span class="id" title="var">P</span> <span class="id" title="var">b</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">P</span> <span class="id" title="var">eq</span> <span class="id" title="var">pa</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">pa</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
 <span class="id" title="keyword">Theorem</span> <span class="id" title="var">ex_then_and</span> :<br/>
@@ -202,6 +247,20 @@
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">or_then_ex</span> :<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">A</span> : <span class="id" title="keyword">Set</span>) (<span class="id" title="var">P</span> <span class="id" title="var">Q</span> : <span class="id" title="var">A</span> → <span class="id" title="keyword">Prop</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>) ∨ (<span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">Q</span> <span class="id" title="var">x</span>) → <span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span> ∨ <span class="id" title="var">Q</span> <span class="id" title="var">x</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> [[<span class="id" title="var">x</span> <span class="id" title="var">px</span>] | [<span class="id" title="var">x</span> <span class="id" title="var">qx</span>]].<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">∃</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">left</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">px</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">∃</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">qx</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
 <span class="id" title="keyword">Theorem</span> <span class="id" title="var">fa_iff_and</span> :<br/>
 &nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">A</span> : <span class="id" title="keyword">Set</span>) (<span class="id" title="var">P</span> <span class="id" title="var">Q</span> : <span class="id" title="var">A</span> → <span class="id" title="keyword">Prop</span>),<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span> ∧ <span class="id" title="var">Q</span> <span class="id" title="var">x</span>) ↔ (<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>) ∧ (<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">Q</span> <span class="id" title="var">x</span>).<br/>
@@ -223,7 +282,7 @@
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">fa_dist_or</span> :<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">fa_then_or</span> :<br/>
 &nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">A</span> : <span class="id" title="keyword">Set</span>) (<span class="id" title="var">P</span> <span class="id" title="var">Q</span> : <span class="id" title="var">A</span> → <span class="id" title="keyword">Prop</span>),<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>) ∨ (<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">Q</span> <span class="id" title="var">x</span>) → (<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span> ∨ <span class="id" title="var">Q</span> <span class="id" title="var">x</span>).<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
@@ -235,7 +294,7 @@
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">fa_dist_imp</span> :<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">fa_then_imp</span> :<br/>
 &nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">A</span> : <span class="id" title="keyword">Set</span>) (<span class="id" title="var">P</span> <span class="id" title="var">Q</span> : <span class="id" title="var">A</span> → <span class="id" title="keyword">Prop</span>),<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span> → <span class="id" title="var">Q</span> <span class="id" title="var">x</span>) → (<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>) → (<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">Q</span> <span class="id" title="var">x</span>).<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
@@ -247,7 +306,7 @@
 <br/>
 <span class="id" title="keyword">Theorem</span> <span class="id" title="var">ex_then_not_fa_not</span> :<br/>
 &nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">A</span> : <span class="id" title="keyword">Set</span>) (<span class="id" title="var">P</span> : <span class="id" title="var">A</span> → <span class="id" title="keyword">Prop</span>),<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>) → (~ (<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, ¬ <span class="id" title="var">P</span> <span class="id" title="var">x</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>) → ¬ <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, ¬ <span class="id" title="var">P</span> <span class="id" title="var">x</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">P</span> [<span class="id" title="var">x</span> <span class="id" title="var">px</span>] <span class="id" title="var">f</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<span class="id" title="var">f</span> <span class="id" title="var">x</span>).<br/>
@@ -255,114 +314,45 @@
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">and_not_then_ex</span> :<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">A</span> : <span class="id" title="keyword">Set</span>) (<span class="id" title="var">P</span> <span class="id" title="var">Q</span> : <span class="id" title="var">A</span> → <span class="id" title="keyword">Prop</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;¬ ((<span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>) ∧ (<span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">Q</span> <span class="id" title="var">x</span>) → <span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span> ∧ <span class="id" title="var">Q</span> <span class="id" title="var">x</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">bool</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">b</span> ⇒ <span class="id" title="var">b</span> = <span class="id" title="var">true</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">b</span> ⇒ <span class="id" title="var">b</span> = <span class="id" title="var">false</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">ext</span> : <span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">bool</span>, <span class="id" title="var">x</span> = <span class="id" title="var">true</span>). {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">true</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">exf</span> : <span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">bool</span>, <span class="id" title="var">x</span> = <span class="id" title="var">false</span>). {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">false</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">f</span> (<span class="id" title="var">conj</span> <span class="id" title="var">ext</span> <span class="id" title="var">exf</span>)) <span class="id" title="keyword">as</span> [<span class="id" title="var">b</span> [<span class="id" title="var">eq1</span> <span class="id" title="var">eq2</span>]].<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq1</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">eq1</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">discriminate</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">forall_not_then_exists</span> :<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">A</span> : <span class="id" title="keyword">Set</span>), <span class="id" title="keyword">∀</span> (<span class="id" title="var">P</span> : <span class="id" title="var">A</span> → <span class="id" title="keyword">Prop</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;¬ ((<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>) → <span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">Empty_set</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">P</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">fa</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">Empty_set</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>). {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">f</span> <span class="id" title="var">fa</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">x</span> <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
 <span class="id" title="keyword">End</span> <span class="id" title="var">PredicateLogic</span>.<br/>
-
-<br/>
-<span class="id" title="keyword">Section</span> <span class="id" title="var">ClassicalLogic</span>.<br/>
-<span class="id" title="keyword">Definition</span> <span class="id" title="var">lem</span> :=<br/>
-&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">P</span> : <span class="id" title="keyword">Prop</span>, ¬ <span class="id" title="var">P</span> ∨ <span class="id" title="var">P</span>.<br/>
-<span class="id" title="keyword">Definition</span> <span class="id" title="var">peirce</span> :=<br/>
-&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> : <span class="id" title="keyword">Prop</span>, ((<span class="id" title="var">P</span> → <span class="id" title="var">Q</span>) → <span class="id" title="var">P</span>) → <span class="id" title="var">P</span>.<br/>
-<span class="id" title="keyword">Definition</span> <span class="id" title="var">dne</span> :=<br/>
-&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">P</span> : <span class="id" title="keyword">Prop</span>, ¬ ¬ <span class="id" title="var">P</span> → <span class="id" title="var">P</span>.<br/>
-<span class="id" title="keyword">Definition</span> <span class="id" title="var">neg_demorgan</span> :=<br/>
-&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> : <span class="id" title="keyword">Prop</span>, ¬ (~ <span class="id" title="var">P</span> ∧ ¬ <span class="id" title="var">Q</span>) → <span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>.<br/>
-<span class="id" title="keyword">Definition</span> <span class="id" title="var">classical_implies</span> :=<br/>
-&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> : <span class="id" title="keyword">Prop</span>, (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span>) → ¬ <span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>.<br/>
-
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">lem_then_peirce</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">lem</span> → <span class="id" title="var">peirce</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">lem</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">lem</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">lem</span> <span class="id" title="var">P</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">np</span> | <span class="id" title="var">p</span>].<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">peirce_then_dne</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">peirce</span> → <span class="id" title="var">dne</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">peirce</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">peirce</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">P</span> <span class="id" title="var">nnp</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">peirce</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Q</span> := <span class="id" title="var">False</span>).<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">np</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-
-<br/>
-<span class="id" title="keyword">Lemma</span> <span class="id" title="var">nonrefutable</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">P</span> : <span class="id" title="keyword">Prop</span>, ¬ ¬ (~ <span class="id" title="var">P</span> ∨ <span class="id" title="var">P</span>).<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">P</span> <span class="id" title="var">n</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">n</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">left</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">n</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">right</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">dne_then_lem</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">dne</span> → <span class="id" title="var">lem</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">dne</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">dne</span> <span class="id" title="var">P</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">dne</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">nonrefutable</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">dne_then_neg_demorgan</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">dne</span> → <span class="id" title="var">neg_demorgan</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">dne</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">dne</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">h</span> := <span class="id" title="var">dne_then_lem</span> <span class="id" title="var">dne</span>).<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">h</span> <span class="id" title="var">P</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">np</span> | <span class="id" title="var">p</span>].<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">right</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">h</span> <span class="id" title="var">Q</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">nq</span> | <span class="id" title="var">q</span>].<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">set</span> (<span class="id" title="var">h2</span> := <span class="id" title="var">conj</span> <span class="id" title="var">np</span> <span class="id" title="var">nq</span>).<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">neg_demorgan_then_classical_implies</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">neg_demorgan</span> → <span class="id" title="var">classical_implies</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">neg_demorgan</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">neg_demorgan</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">neg_demorgan</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">nnp</span> <span class="id" title="var">nq</span>].<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">nnp</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">nq</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">classical_implies_then_lem</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">classical_implies</span> → <span class="id" title="var">lem</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">classical_implies</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">classical_implies</span> <span class="id" title="var">P</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">classical_implies</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-
-<br/>
-<span class="id" title="keyword">End</span> <span class="id" title="var">ClassicalLogic</span>.<br/>
 </div>
 </div>
 
