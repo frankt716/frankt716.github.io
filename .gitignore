@@ -21,3 +21,5 @@ latex/trees
 public
 server
 *.lock
+_cache/
+.stack-work/
