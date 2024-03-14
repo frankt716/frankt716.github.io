@@ -22,4 +22,5 @@ public
 server
 *.lock
 _cache/
+_site/
 .stack-work/
