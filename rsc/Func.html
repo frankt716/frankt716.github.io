@@ -1,0 +1,580 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../css/coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Func</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Func</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">Coq</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">Bool.Bool</span>.<br/>
+</div>
+
+<div class="doc">
+   Functions as relations.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <span class="id" title="var">Functions</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> (<span class="id" title="var">choice</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">P</span>} (<span class="id" title="var">prf</span> : <span class="id" title="tactic">∃</span> <span class="id" title="var">a</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">a</span>), <span class="id" title="var">A</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> (<span class="id" title="var">choice_ok</span> : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">P</span>} (<span class="id" title="var">prf</span> : <span class="id" title="tactic">∃</span> <span class="id" title="var">a</span> : <span class="id" title="var">A</span>, <span class="id" title="var">P</span> <span class="id" title="var">a</span>), <span class="id" title="var">P</span> (<span class="id" title="var">choice</span> <span class="id" title="var">prf</span>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Functions can be realized as special binary relations.
+     To specify a function from <span class="inlinecode"><span class="id" title="var">dom</span></span> to <span class="inlinecode"><span class="id" title="var">cod</span></span>, specify
+     a binary relation that is total and functional.
+     Intuitively, <span class="inlinecode"><span class="id" title="var">rel</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode"><span class="id" title="var">y</span></span> means when we evaluate the function at <span class="inlinecode"><span class="id" title="var">x</span></span>
+     then the output is <span class="inlinecode"><span class="id" title="var">y</span></span>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Record</span> <span class="id" title="var">Func</span> (<span class="id" title="var">dom</span> <span class="id" title="var">cod</span> : <span class="id" title="keyword">Type</span>) : <span class="id" title="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">mkFunc</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">rel</span> : <span class="id" title="var">dom</span> → <span class="id" title="var">cod</span> → <span class="id" title="keyword">Prop</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;; <span class="id" title="var">total</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">dom</span>, <span class="id" title="tactic">∃</span> <span class="id" title="var">y</span> : <span class="id" title="var">cod</span>, <span class="id" title="var">rel</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;; <span class="id" title="var">functional</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">dom</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span> : <span class="id" title="var">cod</span>, <span class="id" title="var">rel</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> → <span class="id" title="var">rel</span> <span class="id" title="var">x</span> <span class="id" title="var">z</span> → <span class="id" title="var">y</span> = <span class="id" title="var">z</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Totality says for any <span class="inlinecode"><span class="id" title="var">x</span></span> in <span class="inlinecode"><span class="id" title="var">dom</span></span> there is some <span class="inlinecode"><span class="id" title="var">y</span></span> in <span class="inlinecode"><span class="id" title="var">cod</span></span>
+     such that <span class="inlinecode"><span class="id" title="var">rel</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode"><span class="id" title="var">y</span></span>. Thus, a natural notion of function application is
+     to map <span class="inlinecode"><span class="id" title="var">x</span></span> to <span class="inlinecode"><span class="id" title="var">y</span></span>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">app</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">dom</span> <span class="id" title="var">cod</span>}, <span class="id" title="var">Func</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span> → <span class="id" title="var">dom</span> → <span class="id" title="var">cod</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<span class="id" title="var">choice</span> (<span class="id" title="var">f</span>.(<span class="id" title="var">total</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span>) <span class="id" title="var">x</span>)).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Indeed, this notion of function application agrees with the
+     underlying relation of a given function.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <span class="id" title="var">app_iff_rel</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">dom</span> <span class="id" title="var">cod</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span>) (<span class="id" title="var">x</span> : <span class="id" title="var">dom</span>) (<span class="id" title="var">y</span> : <span class="id" title="var">cod</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span> = <span class="id" title="var">y</span> ↔ (<span class="id" title="var">f</span>.(<span class="id" title="var">rel</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span>) <span class="id" title="var">x</span> <span class="id" title="var">y</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">s</span> := <span class="id" title="var">total</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">app</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">fold</span> <span class="id" title="var">s</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">app</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">app</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<span class="id" title="var">choice_ok</span> <span class="id" title="var">s</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">rel</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<span class="id" title="var">f</span>.(<span class="id" title="var">functional</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span>)) <span class="id" title="keyword">with</span> (<span class="id" title="var">x</span> := <span class="id" title="var">x</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> (<span class="id" title="var">choice_ok</span> <span class="id" title="var">s</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">rel</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Often, we define functions by "formulas". For example, we often
+     write
+     <br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">x</span> ↦ <span class="id" title="var">x</span> + 1
+<div class="paragraph"> </div>
+
+</span>     or
+     <br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">f</span>(<span class="id" title="var">x</span>) = <span class="id" title="var">x</span> + 1
+<div class="paragraph"> </div>
+
+</span>     to define a function that maps the input <span class="inlinecode"><span class="id" title="var">x</span></span> to the output <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">+</span> <span class="inlinecode">1</span>.
+     This always yields a function in the sense introduced in the
+     beginning of this module.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">by_formula</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">dom</span> <span class="id" title="var">cod</span> : <span class="id" title="keyword">Type</span>}, (<span class="id" title="var">dom</span> → <span class="id" title="var">cod</span>) → <span class="id" title="var">Func</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<span class="id" title="var">mkFunc</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> ⇒ <span class="id" title="var">f</span> <span class="id" title="var">x</span> = <span class="id" title="var">y</span>) <span class="id" title="var">_</span> <span class="id" title="var">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">f</span> <span class="id" title="var">x</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span> <span class="id" title="var">eq1</span> <span class="id" title="var">eq2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">eq1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">eq2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Of course, the function defined by <span class="inlinecode"><span class="id" title="var">by_formula</span></span> must agree with the given
+     formula. For example, when I evaluate the function defined by
+     <br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">x</span> ↦ <span class="id" title="var">x</span> + 1
+<div class="paragraph"> </div>
+
+</span>     at <span class="inlinecode">1</span>, I should get <span class="inlinecode">2</span>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <span class="id" title="var">by_formula_ok</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">dom</span> <span class="id" title="var">cod</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">formula</span> : <span class="id" title="var">dom</span> → <span class="id" title="var">cod</span>) (<span class="id" title="var">x</span> : <span class="id" title="var">dom</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">app</span> (<span class="id" title="var">by_formula</span> <span class="id" title="var">formula</span>) <span class="id" title="var">x</span> = <span class="id" title="var">formula</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span> <span class="id" title="var">formula</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">by_formula</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">app</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">ok</span> := <span class="id" title="var">choice_ok</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">ex_intro</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">y</span> : <span class="id" title="var">cod</span> ⇒ <span class="id" title="var">formula</span> <span class="id" title="var">x</span> = <span class="id" title="var">y</span>) (<span class="id" title="var">formula</span> <span class="id" title="var">x</span>) <span class="id" title="var">eq_refl</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">ok</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     We consider two functions
+     <br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">f</span>, <span class="id" title="var">g</span> : <span class="id" title="var">dom</span> → <span class="id" title="var">cod</span>
+<div class="paragraph"> </div>
+
+</span>     equal if they have the same IO behavior:
+     they map the same input to the same output.
+     This is called <i>functional extensionality</i>.
+     Extensionality means that we don't care about the
+     internals of the function. For example, the functions
+     <br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">f</span>(<span class="id" title="var">x</span>) = 2(<span class="id" title="var">x</span> + 1) <span class="id" title="var">and</span> <span class="id" title="var">g</span>(<span class="id" title="var">x</span>) = 2<span class="id" title="var">x</span> + 2
+<div class="paragraph"> </div>
+
+</span>     are equal (because they have the same IO behavior)
+     even though their internals are different (they are defined
+     by different formulas.)
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <span class="id" title="var">funext</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">dom</span> <span class="id" title="var">cod</span>} (<span class="id" title="var">f</span> <span class="id" title="var">g</span> : <span class="id" title="var">Func</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <span class="id" title="var">dom</span>, <span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span> = <span class="id" title="var">app</span> <span class="id" title="var">g</span> <span class="id" title="var">x</span>) → <span class="id" title="var">f</span> = <span class="id" title="var">g</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Given a function that maps elements of <span class="inlinecode"><span class="id" title="var">A</span></span> to elements of <span class="inlinecode"><span class="id" title="var">B</span></span>
+     and a function that maps elements of <span class="inlinecode"><span class="id" title="var">B</span></span> to elements of <span class="inlinecode"><span class="id" title="var">C</span></span>, we
+     can compose these two functions, yielding a function that maps
+     elements of <span class="inlinecode"><span class="id" title="var">A</span></span> to elements of <span class="inlinecode"><span class="id" title="var">C</span></span>. Function composition is given
+     by the following formula:
+     <br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">x</span> ↦ <span class="id" title="var">app</span> <span class="id" title="var">g</span> (<span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span>)
+<div class="paragraph"> </div>
+
+</span>   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">comp</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>}, <span class="id" title="var">Func</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> → <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> → <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">C</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">g</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<span class="id" title="var">by_formula</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">a</span> ⇒ <span class="id" title="var">app</span> <span class="id" title="var">g</span> (<span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">a</span>))).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     For any two composable functions, the composite agrees with the
+     formula given above. This is a simple corollary of <span class="inlinecode"><span class="id" title="var">by_formula_ok</span></span>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <span class="id" title="var">comp_ok</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} (<span class="id" title="var">g</span> : <span class="id" title="var">Func</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>) (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>) (<span class="id" title="var">a</span> : <span class="id" title="var">A</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">app</span> (<span class="id" title="var">comp</span> <span class="id" title="var">g</span> <span class="id" title="var">f</span>) <span class="id" title="var">a</span> = <span class="id" title="var">app</span> <span class="id" title="var">g</span> (<span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">a</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">g</span> <span class="id" title="var">f</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">comp</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">by_formula_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Function composition is associative.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <span class="id" title="var">comp_assoc</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">D</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">C</span> <span class="id" title="var">D</span>) (<span class="id" title="var">g</span> : <span class="id" title="var">Func</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>) (<span class="id" title="var">h</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">comp</span> <span class="id" title="var">f</span> (<span class="id" title="var">comp</span> <span class="id" title="var">g</span> <span class="id" title="var">h</span>) = <span class="id" title="var">comp</span> (<span class="id" title="var">comp</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span>) <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">D</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">funext</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     The identity function is sort of like a no-op in CS.
+     Given an element of <span class="inlinecode"><span class="id" title="var">A</span></span>, the identity function on <span class="inlinecode"><span class="id" title="var">A</span></span> simply
+     outputs the input without doing anything to it.
+     It is defined by the formula
+     <br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">x</span> ↦ <span class="id" title="var">x</span>
+<div class="paragraph"> </div>
+
+</span>   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">id</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span>}, <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">A</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<span class="id" title="var">by_formula</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> ⇒ <span class="id" title="var">x</span>)).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Again, <span class="inlinecode"><span class="id" title="var">id_ok</span></span> is a simple corollary of <span class="inlinecode"><span class="id" title="var">by_formula_ok</span></span>. Ignore
+     the weird syntax of its statement. It is needed for minor
+     technical reasons.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <span class="id" title="var">id_ok</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> : <span class="id" title="keyword">Type</span>} <span class="id" title="var">x</span>, <span class="id" title="var">app</span> (@<span class="id" title="var">id</span> <span class="id" title="var">A</span>) <span class="id" title="var">x</span> = <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">id</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">by_formula_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     The identity function is the "multiplicative identity" with respect
+     to composition.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <span class="id" title="var">id_left</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">dom</span> <span class="id" title="var">cod</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span>), <span class="id" title="var">comp</span> <span class="id" title="var">f</span> <span class="id" title="var">id</span> = <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">funext</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">id_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <span class="id" title="var">id_right</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">dom</span> <span class="id" title="var">cod</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span>), <span class="id" title="var">comp</span> <span class="id" title="var">id</span> <span class="id" title="var">f</span> = <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">funext</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">id_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     A <i>surjective</i> function is a function in which every element
+     in the codomain is mapped by some element in the domain.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">surjective</span> {<span class="id" title="var">dom</span> <span class="id" title="var">cod</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">y</span> : <span class="id" title="var">cod</span>, <span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> : <span class="id" title="var">dom</span>, <span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span> = <span class="id" title="var">y</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     An <i>injective</i> function is a function in which no two elements in the
+     domain are mapped to the same element in the codomain.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">injective</span> {<span class="id" title="var">dom</span> <span class="id" title="var">cod</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">dom</span> <span class="id" title="var">cod</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> <span class="id" title="var">x'</span> : <span class="id" title="var">dom</span>, <span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span> = <span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">x'</span> → <span class="id" title="var">x</span> = <span class="id" title="var">x'</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     A trivial surjective function is the identity function.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Example</span> <span class="id" title="var">id_sur</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span>}, <span class="id" title="var">surjective</span> (@<span class="id" title="var">id</span> <span class="id" title="var">A</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">id_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     A trivial injective function is the identity function.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Example</span> <span class="id" title="var">id_inj</span> : <span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span>}, <span class="id" title="var">injective</span> (@<span class="id" title="var">id</span> <span class="id" title="var">A</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">a</span> <span class="id" title="var">a'</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">id_ok</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">id_ok</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Every surjective function is <i>right cancellable</i>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <span class="id" title="var">sur_then_rc</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">surjective</span> <span class="id" title="var">f</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">C</span> (<span class="id" title="var">g</span> <span class="id" title="var">h</span> : <span class="id" title="var">Func</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>), <span class="id" title="var">comp</span> <span class="id" title="var">g</span> <span class="id" title="var">f</span> = <span class="id" title="var">comp</span> <span class="id" title="var">h</span> <span class="id" title="var">f</span> → <span class="id" title="var">g</span> = <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span> <span class="id" title="var">sur</span> <span class="id" title="var">C</span> <span class="id" title="var">g</span> <span class="id" title="var">h</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">funext</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">b</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">sur</span> <span class="id" title="var">b</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">a</span> <span class="id" title="var">eq'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">eq'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Every injective function is <i>left cancellable</i>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <span class="id" title="var">inj_then_lc</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> {<span class="id" title="var">B</span> <span class="id" title="var">C</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">injective</span> <span class="id" title="var">f</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">A</span> (<span class="id" title="var">g</span> <span class="id" title="var">h</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>), <span class="id" title="var">comp</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> = <span class="id" title="var">comp</span> <span class="id" title="var">f</span> <span class="id" title="var">h</span> → <span class="id" title="var">g</span> = <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">f</span> <span class="id" title="var">inj</span> <span class="id" title="var">A</span> <span class="id" title="var">g</span> <span class="id" title="var">h</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">funext</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">inj</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     A function <span class="inlinecode"><span class="id" title="var">f</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">dom</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">cod</span></span> is invertible if there is a
+     function <span class="inlinecode"><span class="id" title="var">g</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">cod</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">dom</span></span> so that <span class="inlinecode"><span class="id" title="var">comp</span></span> <span class="inlinecode"><span class="id" title="var">f</span></span> <span class="inlinecode"><span class="id" title="var">g</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">id</span></span> and
+     <span class="inlinecode"><span class="id" title="var">comp</span></span> <span class="inlinecode"><span class="id" title="var">g</span></span> <span class="inlinecode"><span class="id" title="var">f</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">id</span></span>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">invertible</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">g</span> : <span class="id" title="var">Func</span> <span class="id" title="var">B</span> <span class="id" title="var">A</span>, <span class="id" title="var">comp</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> = <span class="id" title="var">id</span> ∧ <span class="id" title="var">comp</span> <span class="id" title="var">g</span> <span class="id" title="var">f</span> = <span class="id" title="var">id</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Every bijection is invertible.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <span class="id" title="var">bij_then_inv</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>), <span class="id" title="var">injective</span> <span class="id" title="var">f</span> → <span class="id" title="var">surjective</span> <span class="id" title="var">f</span> → <span class="id" title="var">invertible</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span> <span class="id" title="var">inj</span> <span class="id" title="var">sur</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">invertible</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">surjective</span> <span class="id" title="tactic">in</span> <span class="id" title="var">sur</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">by_formula</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">b</span> ⇒ <span class="id" title="var">choice</span> (<span class="id" title="var">sur</span> <span class="id" title="var">b</span>))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">funext</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">b</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">by_formula_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">eq</span> := <span class="id" title="var">choice_ok</span> (<span class="id" title="var">sur</span> <span class="id" title="var">b</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">id_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">funext</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">comp_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">by_formula_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">eq</span> := <span class="id" title="var">choice_ok</span> (<span class="id" title="var">sur</span> (<span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">a</span>))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">injective</span> <span class="id" title="tactic">in</span> <span class="id" title="var">inj</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">inj</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">id_ok</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     The composition of two invertible functions is invertible.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <span class="id" title="var">inv_closed_under_comp</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} (<span class="id" title="var">g</span> : <span class="id" title="var">Func</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>) (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">invertible</span> <span class="id" title="var">g</span> → <span class="id" title="var">invertible</span> <span class="id" title="var">f</span> → <span class="id" title="var">invertible</span> (<span class="id" title="var">comp</span> <span class="id" title="var">g</span> <span class="id" title="var">f</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">g</span> <span class="id" title="var">f</span> [<span class="id" title="var">gi</span> [<span class="id" title="var">eq_g1</span> <span class="id" title="var">eq_g2</span>]] [<span class="id" title="var">fi</span> [<span class="id" title="var">eq_f1</span> <span class="id" title="var">eq_f2</span>]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">comp</span> <span class="id" title="var">fi</span> <span class="id" title="var">gi</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <span class="id" title="var">comp_assoc</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">pattern</span> (<span class="id" title="var">comp</span> (<span class="id" title="var">comp</span> <span class="id" title="var">g</span> <span class="id" title="var">f</span>) <span class="id" title="var">fi</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">comp_assoc</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq_f1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">id_left</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq_g1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <span class="id" title="var">comp_assoc</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">pattern</span> (<span class="id" title="var">comp</span> (<span class="id" title="var">comp</span> <span class="id" title="var">fi</span> <span class="id" title="var">gi</span>) <span class="id" title="var">g</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">comp_assoc</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq_g2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">id_left</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq_f2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Natural numbers consist of 0, 1, 2, .... every thing is
+     represented as a binary number in a computer and every
+     binary number corresponds to a natural number, so we
+     can think of a program as a function <span class="inlinecode"><span class="id" title="var">f</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">nat</span></span> that
+     takes an input (represented as a natural number) and
+     produces an output (represented as a natural number).
+     Programs themselves are represented as binary numbers
+     in a computer, i.e., every program can be given a
+     natural number <i>code</i>. A particularly interesting
+     function is the decoder <span class="inlinecode"><span class="id" title="var">decode</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" title="var">Func</span></span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode"><span class="id" title="var">nat</span>)</span>, i.e.,
+     it takes the natural number code of a program and
+     outputs a function that the program computes. The following
+     theorem shows that no function <span class="inlinecode"><span class="id" title="var">f</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" title="var">Func</span></span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode"><span class="id" title="var">nat</span>)</span> is
+     surjective. In particular, this means that <span class="inlinecode"><span class="id" title="var">decode</span></span> is not
+     surjective, i.e., some functions can't be computed by any
+     program. This proof employs a technique called <i>diagonalization</i>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <span class="id" title="var">uncomputable</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">nat</span> (<span class="id" title="var">Func</span> <span class="id" title="var">nat</span> <span class="id" title="var">nat</span>)), ¬ <span class="id" title="var">surjective</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">f</span> <span class="id" title="var">sur</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">k</span> := <span class="id" title="var">by_formula</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">n</span> ⇒ <span class="id" title="var">S</span> (<span class="id" title="var">app</span> (<span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">n</span>) <span class="id" title="var">n</span>))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">sur</span> <span class="id" title="var">k</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">n</span> <span class="id" title="var">eq</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">m</span> := <span class="id" title="var">app</span> (<span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">n</span>) <span class="id" title="var">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">eq'</span> : <span class="id" title="var">m</span> = <span class="id" title="var">app</span> <span class="id" title="var">k</span> <span class="id" title="var">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">m</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">k</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">by_formula_ok</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">fold</span> <span class="id" title="var">m</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">neq</span> := <span class="id" title="var">n_Sn</span> <span class="id" title="var">m</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     We can prove Cantor's theorem using the same technique
+     as <span class="inlinecode"><span class="id" title="var">uncomputable</span></span>.
+   
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <span class="id" title="var">cantor</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span>} (<span class="id" title="var">f</span> : <span class="id" title="var">Func</span> <span class="id" title="var">A</span> (<span class="id" title="var">Func</span> <span class="id" title="var">A</span> <span class="id" title="var">bool</span>)), ¬ <span class="id" title="var">surjective</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">f</span> <span class="id" title="var">sur</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">g</span> := <span class="id" title="var">by_formula</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">a</span> ⇒ <span class="id" title="var">negb</span> (<span class="id" title="var">app</span> (<span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">a</span>) <span class="id" title="var">a</span>))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">sur</span> <span class="id" title="var">g</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">a</span> <span class="id" title="var">eq</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">eq'</span> : <span class="id" title="var">app</span> (<span class="id" title="var">app</span> <span class="id" title="var">f</span> <span class="id" title="var">a</span>) <span class="id" title="var">a</span> = <span class="id" title="var">app</span> <span class="id" title="var">g</span> <span class="id" title="var">a</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">g</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">by_formula_ok</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">no_fixpoint_negb</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <span class="id" title="var">Functions</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
