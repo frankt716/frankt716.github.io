@@ -1,3 +1,6 @@
 [submodule "theme"]
 	path = theme
 	url = https://git.sr.ht/~jonsterling/forester-base-theme
+[submodule "academic"]
+	path = academic
+	url = https://github.com/frankt716/academic.git
