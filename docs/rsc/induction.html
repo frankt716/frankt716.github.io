@@ -1,0 +1,1227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../css/coqdoc.css" rel="stylesheet" type="text/css" />
+    <title>induction</title>
+  </head>
+
+  <body>
+    <div id="main">
+
+      <h1 class="libtitle">induction</h1>
+      <div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">Arith</span>.<br />
+<span class="id" title="keyword">Module</span> <span class="id" title="keyword">Type</span> <span class="id" title="keyword">Induction</span>.<br />
+</div>
+
+<div class="doc">
+<a id="lab1"></a><h1 class="section">Inductive data types and induction</h1>
+
+
+<div class="paragraph"> </div>
+
+   The type of natural numbers is inductively defined by two rules:
+<ul class="doclist">
+<li> <span class="inlinecode"><span class="id" title="var">O</span></span> is a natural number
+
+</li>
+<li> if <span class="inlinecode"><span class="id" title="var">n</span></span> is a natural number then <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">n</span></span> is a natural number.
+
+</li>
+</ul>
+   We write <span class="inlinecode">0</span> for <span class="inlinecode"><span class="id" title="var">O</span></span>, <span class="inlinecode">1</span> for <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">O</span></span>, <span class="inlinecode">2</span> for <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode">(<span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">O</span>)</span>, etc.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Print</span> <span class="id" title="var">nat</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   Inductively defined data types admit induction (elimination)
+   principles. The induction principle of a data type
+   tells us how to use an element of that type.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Check</span> <span class="id" title="var">nat_ind</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   In fact, <span class="inlinecode"><span class="id" title="var">True</span></span>, <span class="inlinecode"><span class="id" title="var">False</span></span>, <span class="inlinecode">∧</span>, <span class="inlinecode">∨</span>, <span class="inlinecode"><span class="id" title="tactic">∃</span></span>, and <span class="inlinecode">=</span> are inductive types in Coq
+   whose induction principles we have been taking for granted.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Print</span> <span class="id" title="var">True</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="keyword">Inductive</span></span> <span class="inlinecode"><span class="id" title="var">True</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> <span class="inlinecode">:=</span>  <span class="inlinecode"><span class="id" title="var">I</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">True</span>.</span>&nbsp;*)</span><br />
+<span class="id" title="keyword">Check</span> <span class="id" title="var">True_ind</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">True_ind</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span>,</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">True</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P</span></span>&nbsp;*)</span><br />
+
+<br />
+<span class="id" title="keyword">Print</span> <span class="id" title="var">False</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="keyword">Inductive</span></span> <span class="inlinecode"><span class="id" title="var">False</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> <span class="inlinecode">:=</span>  <span class="inlinecode">.</span>&nbsp;*)</span><br />
+<span class="id" title="keyword">Check</span> <span class="id" title="var">False_ind</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">False_ind</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span>,</span> <span class="inlinecode"><span class="id" title="var">False</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P</span></span>&nbsp;*)</span><br />
+
+<br />
+<span class="id" title="keyword">Print</span> "/\".<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="keyword">Inductive</span></span> <span class="inlinecode"><span class="id" title="var">and</span></span> <span class="inlinecode">(<span class="id" title="var">A</span></span> <span class="inlinecode"><span class="id" title="var">B</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span>)</span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> <span class="inlinecode">:=</span>  <span class="inlinecode"><span class="id" title="var">conj</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">B</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">B</span>.</span>&nbsp;*)</span><br />
+<span class="id" title="keyword">Check</span> <span class="id" title="var">and_ind</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">and_ind</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode"><span class="id" title="var">B</span></span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span>,</span> <span class="inlinecode">(<span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">B</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">∧</span> <span class="inlinecode"><span class="id" title="var">B</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P</span></span>&nbsp;*)</span><br />
+
+<br />
+<span class="id" title="keyword">Print</span> "\/".<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="keyword">Inductive</span></span> <span class="inlinecode"><span class="id" title="var">or</span></span> <span class="inlinecode">(<span class="id" title="var">A</span></span> <span class="inlinecode"><span class="id" title="var">B</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span>)</span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> <span class="inlinecode">:=</span>
+    <span class="inlinecode"><span class="id" title="var">or_introl</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">B</span></span> <span class="inlinecode">|</span> <span class="inlinecode"><span class="id" title="var">or_intror</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">B</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">B</span>.</span>&nbsp;*)</span><br />
+<span class="id" title="keyword">Check</span> <span class="id" title="var">or_ind</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">or_ind</span></span>
+     <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode"><span class="id" title="var">B</span></span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span>,</span> <span class="inlinecode">(<span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" title="var">B</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">∨</span> <span class="inlinecode"><span class="id" title="var">B</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P</span></span>&nbsp;*)</span><br />
+
+<br />
+<span class="id" title="keyword">Print</span> <span class="id" title="var">ex</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="keyword">Inductive</span></span> <span class="inlinecode"><span class="id" title="var">ex</span></span> <span class="inlinecode">(<span class="id" title="var">A</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Type</span>)</span> <span class="inlinecode">(<span class="id" title="var">P</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span>)</span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> <span class="inlinecode">:=</span>
+    <span class="inlinecode"><span class="id" title="var">ex_intro</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span>,</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="tactic">∃</span></span> <span class="inlinecode"><span class="id" title="var">y</span>,</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode"><span class="id" title="var">y</span>.</span>&nbsp;*)</span><br />
+<span class="id" title="keyword">Check</span> <span class="id" title="var">ex_ind</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">ex_ind</span></span>
+     <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode">(<span class="id" title="var">A</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Type</span>)</span> <span class="inlinecode">(<span class="id" title="var">P</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span>)</span> <span class="inlinecode">(<span class="id" title="var">P0</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span>),</span>
+       <span class="inlinecode">(<span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span>,</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P0</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" title="tactic">∃</span></span> <span class="inlinecode"><span class="id" title="var">y</span>,</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode"><span class="id" title="var">y</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P0</span></span>&nbsp;*)</span><br />
+
+<br />
+<span class="id" title="keyword">Print</span> "=".<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="keyword">Inductive</span></span> <span class="inlinecode"><span class="id" title="var">eq</span></span> <span class="inlinecode">(<span class="id" title="var">A</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Type</span>)</span> <span class="inlinecode">(<span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span>)</span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> <span class="inlinecode">:=</span>  <span class="inlinecode"><span class="id" title="var">eq_refl</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">x</span>.</span>&nbsp;*)</span><br />
+<span class="id" title="keyword">Check</span> <span class="id" title="var">eq_ind</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">eq_ind</span></span>
+     <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode">(<span class="id" title="var">A</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Type</span>)</span> <span class="inlinecode">(<span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span>)</span> <span class="inlinecode">(<span class="id" title="var">P</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span>),</span>
+       <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">y</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span>,</span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">y</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P</span></span> <span class="inlinecode"><span class="id" title="var">y</span></span>&nbsp;*)</span><br />
+
+<br />
+</div>
+
+<div class="doc">
+   We can define various functions in terms of the induction principle,
+   although we need to use <span class="inlinecode"><span class="id" title="var">nat_rect</span></span> here for a technical reason
+   that we will not discuss.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">add'</span> : <span class="id" title="var">nat</span> → <span class="id" title="var">nat</span> → <span class="id" title="var">nat</span> :=<br />
+&nbsp;&nbsp;<span class="id" title="var">nat_rect</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">m</span> ⇒ <span class="id" title="var">nat</span> → <span class="id" title="var">nat</span>) (<span class="id" title="keyword">fun</span> <span class="id" title="var">m</span> ⇒ <span class="id" title="var">m</span>) (<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">f</span> <span class="id" title="var">m</span> ⇒ <span class="id" title="var">S</span> (<span class="id" title="var">f</span> <span class="id" title="var">m</span>)).<br />
+
+<br />
+</div>
+
+<div class="doc">
+   Programming with induction principles directly is difficult.
+   Coq (and many other good languages) allows definition by
+   <i>pattern matching</i>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Fixpoint</span> <span class="id" title="var">add''</span> (<span class="id" title="var">n</span> : <span class="id" title="var">nat</span>) (<span class="id" title="var">m</span> : <span class="id" title="var">nat</span>) : <span class="id" title="var">nat</span> :=<br />
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span><br />
+&nbsp;&nbsp;| 0 ⇒ <span class="id" title="var">m</span><br />
+&nbsp;&nbsp;| <span class="id" title="var">S</span> <span class="id" title="var">n'</span> ⇒ <span class="id" title="var">S</span> (<span class="id" title="var">add''</span> <span class="id" title="var">n'</span> <span class="id" title="var">m</span>)<br />
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   Indeed, <span class="inlinecode"><span class="id" title="var">add'</span></span> and <span class="inlinecode"><span class="id" title="var">add''</span></span> compute the same result.
+   We can prove this by induction.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">add'_eq_add''</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">add'</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> = <span class="id" title="var">add''</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">P</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">n</span> ⇒ <span class="id" title="keyword">∀</span> <span class="id" title="var">m</span>, <span class="id" title="var">add'</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> = <span class="id" title="var">add''</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>).<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<span class="id" title="var">nat_ind</span> <span class="id" title="var">P</span>).<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">unfold</span> <span class="id" title="var">P</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">unfold</span> <span class="id" title="var">P</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">IH</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IH</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   Coq offers the <span class="inlinecode"><span class="id" title="tactic">induction</span></span> tactic that applies the appropriate
+   induction principle automatically. The <span class="inlinecode"><span class="id" title="tactic">induction</span></span> tactic
+   also finds a <i>motive of induction</i> automatically.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">add'_eq_add''_better</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">add'</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> = <span class="id" title="var">add''</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHn</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   We can write a simple program that decides whether two natural
+   numbers are equal.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Fixpoint</span> <span class="id" title="var">nat_eq</span> (<span class="id" title="var">n</span> : <span class="id" title="var">nat</span>) (<span class="id" title="var">m</span> : <span class="id" title="var">nat</span>) : <span class="id" title="keyword">Prop</span> :=<br />
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">n</span>, <span class="id" title="var">m</span> <span class="id" title="keyword">with</span><br />
+&nbsp;&nbsp;| 0, 0 ⇒ <span class="id" title="var">True</span><br />
+&nbsp;&nbsp;| 0, <span class="id" title="var">S</span> <span class="id" title="var">m</span> ⇒ <span class="id" title="var">False</span><br />
+&nbsp;&nbsp;| <span class="id" title="var">S</span> <span class="id" title="var">n</span>, 0 ⇒ <span class="id" title="var">False</span><br />
+&nbsp;&nbsp;| <span class="id" title="var">S</span> <span class="id" title="var">n</span>, <span class="id" title="var">S</span> <span class="id" title="var">m</span> ⇒ <span class="id" title="var">nat_eq</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span><br />
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   The correctness of this program is proven in the following
+   two lemmas.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <span class="id" title="var">eq_then_nat_eq</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">n</span> = <span class="id" title="var">m</span> → <span class="id" title="var">nat_eq</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">trivial</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">IHm</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Lemma</span> <span class="id" title="var">nat_eq_then_eq</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">nat_eq</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> → <span class="id" title="var">n</span> = <span class="id" title="var">m</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">induction</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">_</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">induction</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">IHn</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   This simple program allows us to prove a number of theorems
+   about natural numbers. We can now prove that the successor
+   function <span class="inlinecode"><span class="id" title="var">S</span></span> is injective, and that <span class="inlinecode">0</span> is not the successor
+   of any natural number.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">suc_inj</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">S</span> <span class="id" title="var">n</span> = <span class="id" title="var">S</span> <span class="id" title="var">m</span> → <span class="id" title="var">n</span> = <span class="id" title="var">m</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">eq_then_nat_eq</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">nat_eq_then_eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">eq</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">O_neq_suc</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, 0 ≠ <span class="id" title="var">S</span> <span class="id" title="var">n</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">eq_then_nat_eq</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   We can use induction to prove many other properties of
+   the natural numbers.
+ 
+</div>
+<div class="code">
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">add_comm</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">n</span> + <span class="id" title="var">m</span> = <span class="id" title="var">m</span> + <span class="id" title="var">n</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">induction</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">IHm</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">induction</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHn</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHn</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">IHm</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHn</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">add_zero</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="var">n</span> + 0 = <span class="id" title="var">n</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHn</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">suc_add_one</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="var">S</span> <span class="id" title="var">n</span> = <span class="id" title="var">n</span> + 1.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">IHn</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">add_assoc</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span>, <span class="id" title="var">a</span> + (<span class="id" title="var">b</span> + <span class="id" title="var">c</span>) = (<span class="id" title="var">a</span> + <span class="id" title="var">b</span>) + <span class="id" title="var">c</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">a</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHa</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+<a id="lab2"></a><h1 class="section">Additional inductive data type examples</h1>
+
+ 
+<div class="paragraph"> </div>
+
+   A (natural number) binary tree is either a <span class="inlinecode"><span class="id" title="var">leaf</span></span> or a
+   <span class="inlinecode"><span class="id" title="var">node</span></span> consisting of a left subtree <span class="inlinecode"><span class="id" title="var">l</span></span>, a value <span class="inlinecode"><span class="id" title="var">n</span></span>, and
+   a right subtree <span class="inlinecode"><span class="id" title="var">r</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">btree</span> : <span class="id" title="keyword">Type</span> :=<br />
+| <span class="id" title="var">leaf</span> : <span class="id" title="var">btree</span><br />
+| <span class="id" title="var">node</span> (<span class="id" title="var">l</span> : <span class="id" title="var">btree</span>) (<span class="id" title="var">n</span> : <span class="id" title="var">nat</span>) (<span class="id" title="var">r</span> : <span class="id" title="var">btree</span>) : <span class="id" title="var">btree</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   Of course, <span class="inlinecode"><span class="id" title="var">btree</span></span> admits an induction principle.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Check</span> <span class="id" title="var">btree_ind</span>.<br />
+<span class="comment">(*&nbsp;btree_ind<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;forall&nbsp;P&nbsp;:&nbsp;btree&nbsp;-&gt;&nbsp;Prop,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P&nbsp;leaf&nbsp;-&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(forall&nbsp;l&nbsp;:&nbsp;btree,&nbsp;P&nbsp;l&nbsp;-&gt;&nbsp;forall&nbsp;(n&nbsp;:&nbsp;nat)&nbsp;(r&nbsp;:&nbsp;btree),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P&nbsp;r&nbsp;-&gt;&nbsp;P&nbsp;(node&nbsp;l&nbsp;n&nbsp;r))&nbsp;-&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;forall&nbsp;b&nbsp;:&nbsp;btree,&nbsp;P&nbsp;b&nbsp;*)</span><br />
+
+<br />
+</div>
+
+<div class="doc">
+   We can now define a few operations on <span class="inlinecode"><span class="id" title="var">btree</span></span>.
+   <span class="inlinecode"><span class="id" title="var">size</span></span> <span class="inlinecode"><span class="id" title="var">t</span></span> is the number of nodes in <span class="inlinecode"><span class="id" title="var">t</span></span>, and
+   <span class="inlinecode"><span class="id" title="var">reverse</span></span> <span class="inlinecode"><span class="id" title="var">t</span></span> simply flips <span class="inlinecode"><span class="id" title="var">t</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Fixpoint</span> <span class="id" title="var">size</span> (<span class="id" title="var">t</span> : <span class="id" title="var">btree</span>) : <span class="id" title="var">nat</span> :=<br />
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">t</span> <span class="id" title="keyword">with</span><br />
+&nbsp;&nbsp;| <span class="id" title="var">leaf</span> ⇒ 0<br />
+&nbsp;&nbsp;| <span class="id" title="var">node</span> <span class="id" title="var">l</span> <span class="id" title="var">_</span> <span class="id" title="var">r</span> ⇒ <span class="id" title="var">S</span> (<span class="id" title="var">size</span> <span class="id" title="var">l</span> + <span class="id" title="var">size</span> <span class="id" title="var">r</span>)<br />
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br />
+
+<br />
+<span class="id" title="keyword">Fixpoint</span> <span class="id" title="var">reverse</span> (<span class="id" title="var">t</span> : <span class="id" title="var">btree</span>) : <span class="id" title="var">btree</span> :=<br />
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">t</span> <span class="id" title="keyword">with</span><br />
+&nbsp;&nbsp;| <span class="id" title="var">leaf</span> ⇒ <span class="id" title="var">leaf</span><br />
+&nbsp;&nbsp;| <span class="id" title="var">node</span> <span class="id" title="var">l</span> <span class="id" title="var">n</span> <span class="id" title="var">r</span> ⇒ <span class="id" title="var">node</span> (<span class="id" title="var">reverse</span> <span class="id" title="var">r</span>) <span class="id" title="var">n</span> (<span class="id" title="var">reverse</span> <span class="id" title="var">l</span>)<br />
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   We can prove that <span class="inlinecode"><span class="id" title="var">reverse</span></span> is <i>involutive</i>, i.e.,
+   reversing a tree twice is the same as doing nothing.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">reverse_involutive</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">t</span>, <span class="id" title="var">reverse</span> (<span class="id" title="var">reverse</span> <span class="id" title="var">t</span>) = <span class="id" title="var">t</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">t</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHt1</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHt2</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   And <span class="inlinecode"><span class="id" title="var">reverse</span></span> does not change the number of nodes in a tree.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">reverse_same_size</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">t</span>, <span class="id" title="var">size</span> (<span class="id" title="var">reverse</span> <span class="id" title="var">t</span>) = <span class="id" title="var">size</span> <span class="id" title="var">t</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">t</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHt1</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHt2</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">add_comm</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   The examples we have seen thus far admit simple induction
+   proofs. We just do a straightforward induction on one of
+   the variables. There are examples where we need to be a bit
+   more clever.
+ 
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+   Suppose that you want to build a computer system with any amount of
+   storage subject to the following constraints
+<ul class="doclist">
+<li> The system must have at least 2TB of storage.
+
+</li>
+<li> You only have access to any number of
+     2TB or 3TB hard disks.
+
+</li>
+</ul>
+   If we can prove the following theorem, then it is always possible to
+   build such a computer system. We can try to do an induction on <span class="inlinecode"><span class="id" title="var">n</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">storage</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="tactic">∃</span> <span class="id" title="var">i</span> <span class="id" title="var">j</span>, <span class="id" title="var">n</span> + 2 = 2 × <span class="id" title="var">i</span> + 3 × <span class="id" title="var">j</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">∃</span> 1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> 0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">IHn</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> [<span class="id" title="var">j</span> <span class="id" title="var">eq</span>]].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;We&nbsp;can't&nbsp;make&nbsp;1TB&nbsp;of&nbsp;storage&nbsp;out&nbsp;of<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2TB&nbsp;and&nbsp;3TB&nbsp;disks.&nbsp;If&nbsp;we&nbsp;know&nbsp;how&nbsp;to&nbsp;build<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;system&nbsp;with&nbsp;capacity&nbsp;<span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">+</span> <span class="inlinecode">1</span>,&nbsp;then&nbsp;we&nbsp;can<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;build&nbsp;this&nbsp;system&nbsp;by&nbsp;adding&nbsp;a&nbsp;2TB&nbsp;disk.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;However,&nbsp;the&nbsp;induction&nbsp;hypothesis&nbsp;does&nbsp;not<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tell&nbsp;us&nbsp;how&nbsp;to&nbsp;do&nbsp;that.&nbsp;We&nbsp;are&nbsp;stuck.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br />
+<span class="id" title="keyword">Abort</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   The obvious induction does not work. However, this
+   does not necessarily mean that the theorem is not
+   provable. Perhaps, We are just not smart enough.
+   In this case, <span class="inlinecode"><span class="id" title="var">storage</span></span> is in fact provable by
+   induction. Before we prove it, we need to define
+   the <span class="inlinecode">≤</span> relation.
+ 
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+   In Coq, the <span class="inlinecode">≤</span> relation is defined inductively.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Print</span> <span class="id" title="var">le</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="keyword">Inductive</span></span> <span class="inlinecode"><span class="id" title="var">le</span></span> <span class="inlinecode">(<span class="id" title="var">n</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">nat</span>)</span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> <span class="inlinecode">:=</span>
+    <span class="inlinecode"><span class="id" title="var">le_n</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">≤</span> <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">|</span> <span class="inlinecode"><span class="id" title="var">le_S</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">m</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">nat</span>,</span> <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">≤</span> <span class="inlinecode"><span class="id" title="var">m</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">≤</span> <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">m</span>.</span>&nbsp;*)</span><br />
+
+<br />
+</div>
+
+<div class="doc">
+   This definition says that the only canonical ways to construct
+   a proof of <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">≤</span> <span class="inlinecode"><span class="id" title="var">m</span></span> are
+<ul class="doclist">
+<li> we already know <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">m</span></span>, so we can use the constructor <span class="inlinecode"><span class="id" title="var">le_n</span></span>.
+
+</li>
+<li> we know some number <span class="inlinecode"><span class="id" title="var">k</span></span> so that <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">≤</span> <span class="inlinecode"><span class="id" title="var">k</span></span> and <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">k</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">m</span></span>, so
+      we can use the constructor <span class="inlinecode"><span class="id" title="var">le_S</span></span>.
+
+</li>
+</ul>
+  Thus, if we know that <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">≤</span> <span class="inlinecode"><span class="id" title="var">m</span></span> then we should be able to infer that
+  either <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">m</span></span> or there is some <span class="inlinecode"><span class="id" title="var">k</span></span> so that <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">≤</span> <span class="inlinecode"><span class="id" title="var">k</span></span> and <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">k</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">m</span></span>.
+  This is an inversion principle for the inductive type <span class="inlinecode">≤</span>.
+  Indeed, we can prove the inversion principle using induction.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">le_inversion'</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">n</span> ≤ <span class="id" title="var">m</span> → (<span class="id" title="var">n</span> = <span class="id" title="var">m</span>) ∨ (<span class="id" title="tactic">∃</span> <span class="id" title="var">k</span>, <span class="id" title="var">n</span> ≤ <span class="id" title="var">k</span> ∧ <span class="id" title="var">S</span> <span class="id" title="var">k</span> = <span class="id" title="var">m</span>).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">IHle</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">eq</span> | <span class="id" title="var">ex</span>].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">right</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">right</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">ex</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">k</span> [<span class="id" title="var">le'</span> <span class="id" title="var">eq</span>]].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">S</span> <span class="id" title="var">k</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <span class="id" title="var">le_S</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">le'</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   We can use this inversion principle to prove that
+   <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">≤</span> <span class="inlinecode">0</span> never holds for any natural number <span class="inlinecode"><span class="id" title="var">n</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">suc_not_le0'</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, ~(<span class="id" title="var">S</span> <span class="id" title="var">n</span> ≤ 0).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_inversion'</span> <span class="id" title="tactic">in</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">le</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">eq</span> | <span class="id" title="var">ex</span>].<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">symmetry</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<span class="id" title="var">O_neq_suc</span> <span class="id" title="var">n</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">ex</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">k</span> [<span class="id" title="var">_</span> <span class="id" title="var">eq</span>]].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<span class="id" title="var">O_neq_suc</span> <span class="id" title="var">k</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">eq</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   Coq already knows this inversion principle and provides
+   the <span class="inlinecode"><span class="id" title="tactic">inversion</span></span> tactic.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">le_inversion</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">n</span> ≤ <span class="id" title="var">m</span> → (<span class="id" title="var">n</span> = <span class="id" title="var">m</span>) ∨ (<span class="id" title="tactic">∃</span> <span class="id" title="var">k</span>, <span class="id" title="var">n</span> ≤ <span class="id" title="var">k</span> ∧ <span class="id" title="var">S</span> <span class="id" title="var">k</span> = <span class="id" title="var">m</span>).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">right</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">m0</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   The <span class="inlinecode"><span class="id" title="tactic">inversion</span></span> tactic does quite a number of things
+   for us. <span class="inlinecode"><span class="id" title="var">suc_not_le0'</span></span> admits another proof that is
+   quite trivial with the <span class="inlinecode"><span class="id" title="tactic">inversion</span></span> tactic.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">suc_not_le0</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, ~(<span class="id" title="var">S</span> <span class="id" title="var">n</span> ≤ 0).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">le</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   We can use the inversion principle along with induction
+   to prove that the <span class="inlinecode">≤</span> relation is <i>transitive</i> and
+   <i>antisymmetric</i>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">le_transitive</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span>, <span class="id" title="var">a</span> ≤ <span class="id" title="var">b</span> → <span class="id" title="var">b</span> ≤ <span class="id" title="var">c</span> → <span class="id" title="var">a</span> ≤ <span class="id" title="var">c</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> <span class="id" title="var">le</span> <span class="id" title="var">le'</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">c</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">inversion</span> <span class="id" title="var">le'</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">H</span> <span class="id" title="tactic">in</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">inversion</span> <span class="id" title="var">le'</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H</span> <span class="id" title="tactic">in</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">le_S</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">IHc</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">H0</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   Before proving antisymmetry, we record some general facts about <span class="inlinecode">≤</span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">suc_monotone</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">n</span> ≤ <span class="id" title="var">m</span> → <span class="id" title="var">S</span> <span class="id" title="var">n</span> ≤ <span class="id" title="var">S</span> <span class="id" title="var">m</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">le_S</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">IHle</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">suc_inv_monotone</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">S</span> <span class="id" title="var">n</span> ≤ <span class="id" title="var">S</span> <span class="id" title="var">m</span> → <span class="id" title="var">n</span> ≤ <span class="id" title="var">m</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">inversion</span> <span class="id" title="var">H0</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">IHm</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H0</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_transitive</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">b</span> := <span class="id" title="var">m</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">exact</span> <span class="id" title="var">H0</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <span class="id" title="var">le_S</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">suc_not_le</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> {<span class="id" title="var">n</span>}, ¬ (<span class="id" title="var">S</span> <span class="id" title="var">n</span> ≤ <span class="id" title="var">n</span>).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">inversion</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">IHn</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">suc_inv_monotone</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">le</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   Now, we can prove antisymmetry.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">le_antisymmetric</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">n</span> ≤ <span class="id" title="var">m</span> → <span class="id" title="var">m</span> ≤ <span class="id" title="var">n</span> → <span class="id" title="var">n</span> = <span class="id" title="var">m</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> <span class="id" title="var">le</span> <span class="id" title="var">le'</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">le</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">inversion</span> <span class="id" title="var">le'</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H0</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">H1</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">subst</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">le</span> <span class="id" title="var">le'</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">con</span> : <span class="id" title="var">S</span> <span class="id" title="var">m1</span> ≤ <span class="id" title="var">m1</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_transitive</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">b</span> := <span class="id" title="var">m0</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">le_transitive</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">b</span> := <span class="id" title="var">S</span> <span class="id" title="var">m0</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">le_S</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">H1</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> (<span class="id" title="var">con'</span> := <span class="id" title="var">suc_not_le</span> <span class="id" title="var">con</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   The <span class="inlinecode">&lt;</span> relation is defined in terms of <span class="inlinecode">≤</span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Print</span> <span class="id" title="var">lt</span>.<br />
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">lt</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode"><span class="id" title="var">m</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode">⇒</span> <span class="inlinecode"><span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">≤</span> <span class="inlinecode"><span class="id" title="var">m</span></span>
+     <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span>&nbsp;*)</span><br />
+
+<br />
+</div>
+
+<div class="doc">
+   Of course, <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">&lt;</span> <span class="inlinecode"><span class="id" title="var">m</span></span> implies that <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">≤</span> <span class="inlinecode"><span class="id" title="var">m</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">lt_then_le</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="var">n</span> &lt; <span class="id" title="var">m</span> → <span class="id" title="var">n</span> ≤ <span class="id" title="var">m</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">le_S</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">le_S</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">IHlt</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   To prove <span class="inlinecode"><span class="id" title="var">storage</span></span> we first prove a small lemma.
+   The idea is to prove <span class="inlinecode"><span class="id" title="var">storage</span></span> up to some limit <span class="inlinecode"><span class="id" title="var">m</span></span>.
+   We can do induction on <span class="inlinecode"><span class="id" title="var">m</span></span> to show that <span class="inlinecode"><span class="id" title="var">storage</span></span>
+   holds for any upper limit <span class="inlinecode"><span class="id" title="var">m</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <span class="id" title="var">storage'</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">m</span> <span class="id" title="var">n</span>, <span class="id" title="var">n</span> &lt; <span class="id" title="var">m</span> → <span class="id" title="tactic">∃</span> <span class="id" title="var">i</span> <span class="id" title="var">j</span>, <span class="id" title="var">n</span> + 2 = 2 × <span class="id" title="var">i</span> + 3 × <span class="id" title="var">j</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">m</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">n</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">∃</span> 1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> 0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">∃</span> 0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> 1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">set</span> (<span class="id" title="var">f</span> := <span class="id" title="var">IHm</span> <span class="id" title="var">n</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">lt'</span> : <span class="id" title="var">n</span> &lt; <span class="id" title="var">m</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_transitive</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">b</span> := <span class="id" title="var">S</span> <span class="id" title="var">n</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">le_S_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">lt_then_le</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span> <span class="id" title="tactic">in</span> <span class="id" title="var">lt'</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">lt'</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> [<span class="id" title="var">j</span> <span class="id" title="var">eq</span>]].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">i</span> + 1).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">j</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">ring</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   <span class="inlinecode"><span class="id" title="var">storage</span></span> is now a simple corollary of <span class="inlinecode"><span class="id" title="var">storage'</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">storage</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="tactic">∃</span> <span class="id" title="var">i</span> <span class="id" title="var">j</span>, <span class="id" title="var">n</span> + 2 = 2 × <span class="id" title="var">i</span> + 3 × <span class="id" title="var">j</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">storage'</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">m</span> := <span class="id" title="var">S</span> <span class="id" title="var">n</span>).<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   We can assemble this kind of argument into a new induction principle
+   called <i>strong induction</i>. First, we need a few definitions.
+ 
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+   A natural number <span class="inlinecode"><span class="id" title="var">k</span></span> is said to be <i>accessible</i>
+   (with respect to the <span class="inlinecode">&lt;</span> relation) if every natural
+   number <span class="inlinecode">&lt;</span> <span class="inlinecode"><span class="id" title="var">k</span></span> is accessible.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">acc</span> : <span class="id" title="var">nat</span> → <span class="id" title="keyword">Prop</span> :=<br />
+&nbsp;&nbsp;<span class="id" title="var">acc_k</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">k</span>, (<span class="id" title="keyword">∀</span> <span class="id" title="var">y</span>, <span class="id" title="var">y</span> &lt; <span class="id" title="var">k</span> → <span class="id" title="var">acc</span> <span class="id" title="var">y</span>) → <span class="id" title="var">acc</span> <span class="id" title="var">k</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   In fact, every natural number is accessible with respect to
+   the <span class="inlinecode">&lt;</span> relation, i.e., <span class="inlinecode">&lt;</span> is a <i>well founded</i> relation.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">lt_wf</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="var">acc</span> <span class="id" title="var">n</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">acc_k</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">y</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">induction</span> <span class="id" title="var">IHn</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">H0</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">acc_k</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">y</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">acc_k</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">y'</span> <span class="id" title="var">lt'</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">acc_k</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">y''</span> <span class="id" title="var">lt''</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_transitive</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">b</span> := <span class="id" title="var">y'</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">lt''</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">le_transitive</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">b</span> := <span class="id" title="var">y</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <span class="id" title="var">lt_then_le</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">lt'</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <span class="id" title="var">le_S_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">lt</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   We can use the accessibility relation to define
+   the strong induction principle for the natural numbers.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">acc_then_Px</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> {<span class="id" title="var">P</span> : <span class="id" title="var">nat</span> → <span class="id" title="keyword">Prop</span>} (<span class="id" title="var">n</span> : <span class="id" title="var">nat</span>),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span>, (<span class="id" title="keyword">∀</span> <span class="id" title="var">y</span>, <span class="id" title="var">y</span> &lt; <span class="id" title="var">x</span> → <span class="id" title="var">P</span> <span class="id" title="var">y</span>) → <span class="id" title="var">P</span> <span class="id" title="var">x</span>)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;→ <span class="id" title="var">acc</span> <span class="id" title="var">n</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;→ <span class="id" title="var">P</span> <span class="id" title="var">n</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">P</span> <span class="id" title="var">n</span> <span class="id" title="var">f</span> <span class="id" title="var">acc</span> ⇒ <span class="id" title="var">acc_ind</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>).<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">k</span> <span class="id" title="var">_</span> <span class="id" title="var">f'</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">f'</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">acc</span>.<br />
+<span class="id" title="keyword">Defined</span>.<br />
+
+<br />
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">strong_nat_ind</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">P</span> : <span class="id" title="var">nat</span> → <span class="id" title="keyword">Prop</span>,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span>, (<span class="id" title="keyword">∀</span> <span class="id" title="var">y</span>, <span class="id" title="var">y</span> &lt; <span class="id" title="var">x</span> → <span class="id" title="var">P</span> <span class="id" title="var">y</span>) → <span class="id" title="var">P</span> <span class="id" title="var">x</span>)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;→ <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span>, <span class="id" title="var">P</span> <span class="id" title="var">x</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">P</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span> ⇒ <span class="id" title="var">_</span>).<br />
+&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<span class="id" title="var">acc_then_Px</span> <span class="id" title="var">_</span> <span class="id" title="var">f</span> <span class="id" title="var">_</span>).<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">lt_wf</span>.<br />
+<span class="id" title="keyword">Defined</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   We can prove <span class="inlinecode"><span class="id" title="var">storage</span></span> using <span class="inlinecode"><span class="id" title="var">strong_nat_ind</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">storage_str</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="tactic">∃</span> <span class="id" title="var">i</span> <span class="id" title="var">j</span>, <span class="id" title="var">n</span> + 2 = 2 × <span class="id" title="var">i</span> + 3 × <span class="id" title="var">j</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span> <span class="id" title="keyword">using</span> <span class="id" title="var">strong_nat_ind</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">∃</span> 1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> 0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">∃</span> 0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> 1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">set</span> (<span class="id" title="var">h</span> := <span class="id" title="var">H</span> <span class="id" title="var">n</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">lt</span> : <span class="id" title="var">n</span> &lt; <span class="id" title="var">S</span> (<span class="id" title="var">S</span> <span class="id" title="var">n</span>)).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_S</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">h</span> <span class="id" title="tactic">in</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">lt</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> [<span class="id" title="var">j</span> <span class="id" title="var">eq</span>]].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">i</span> + 1).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">j</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">ring</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+<a id="lab3"></a><h1 class="section">Additional strong induction examples</h1>
+
+ 
+<div class="paragraph"> </div>
+
+   A natural number <span class="inlinecode"><span class="id" title="var">n</span></span> is <i>even</i> if
+   there is some <span class="inlinecode"><span class="id" title="var">k</span></span> such that <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">=</span> <span class="inlinecode">2</span> <span class="inlinecode">×</span> <span class="inlinecode"><span class="id" title="var">k</span></span>.
+   Otherwise, it is said to be <i>odd</i>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">even</span> (<span class="id" title="var">n</span> : <span class="id" title="var">nat</span>) : <span class="id" title="keyword">Prop</span> :=<br />
+&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">k</span>, <span class="id" title="var">n</span> = 2 × <span class="id" title="var">k</span>.<br />
+
+<br />
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">odd</span> (<span class="id" title="var">n</span> : <span class="id" title="var">nat</span>) : <span class="id" title="keyword">Prop</span> :=<br />
+&nbsp;&nbsp;¬ (<span class="id" title="var">even</span> <span class="id" title="var">n</span>).<br />
+
+<br />
+<span class="id" title="keyword">Example</span> <span class="id" title="var">even0</span> : <span class="id" title="var">even</span> 0.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">even</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">∃</span> 0.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Example</span> <span class="id" title="var">odd1</span> : <span class="id" title="var">odd</span> 1.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">odd</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">even</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">k</span> <span class="id" title="var">eq</span>].<br />
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">k</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">eq_then_nat_eq</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">suc_inj</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">add_comm</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">O_neq_suc</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Example</span> <span class="id" title="var">odd3</span> : <span class="id" title="var">odd</span> 3.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">k</span> <span class="id" title="var">eq</span>].<br />
+&nbsp;&nbsp;<span class="id" title="var">revert</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<span class="id" title="keyword">match</span> <span class="id" title="var">k</span> <span class="id" title="keyword">with</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0 ⇒ <span class="id" title="var">_</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 1 ⇒ <span class="id" title="var">_</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">S</span> (<span class="id" title="var">S</span> <span class="id" title="var">k</span>) ⇒ <span class="id" title="var">_</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>).<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">discriminate</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">discriminate</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">eq</span> : <span class="id" title="var">S</span> (<span class="id" title="var">S</span> (<span class="id" title="var">k</span> + <span class="id" title="var">S</span> (<span class="id" title="var">S</span> (<span class="id" title="var">k</span> + 0)))) = <span class="id" title="var">S</span> (<span class="id" title="var">S</span> (<span class="id" title="var">S</span> (<span class="id" title="var">S</span> (<span class="id" title="var">k</span> + <span class="id" title="var">k</span>))))).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">ring</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span> <span class="id" title="tactic">in</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">suc_inj</span> <span class="id" title="tactic">in</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">suc_inj</span> <span class="id" title="tactic">in</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">suc_inj</span> <span class="id" title="tactic">in</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">O_neq_suc</span> <span class="id" title="tactic">in</span> <span class="id" title="var">con</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   Some facts about <span class="inlinecode"><span class="id" title="var">even</span></span> and <span class="inlinecode"><span class="id" title="var">odd</span></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">even_even_suc_suc</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="var">even</span> <span class="id" title="var">n</span> → <span class="id" title="var">even</span> (<span class="id" title="var">S</span> (<span class="id" title="var">S</span> <span class="id" title="var">n</span>)).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">_</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">even</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> 1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">k</span> <span class="id" title="var">eq</span>].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">k</span> + 1).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">ring</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Example</span> <span class="id" title="var">even2</span> : <span class="id" title="var">even</span> 2.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">even_even_suc_suc</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">even0</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">even_suc_suc_even</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="var">even</span> (<span class="id" title="var">S</span> (<span class="id" title="var">S</span> <span class="id" title="var">n</span>)) → <span class="id" title="var">even</span> <span class="id" title="var">n</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">n</span> ⇒ <span class="id" title="keyword">match</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0 ⇒ <span class="id" title="var">_</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 1 ⇒ <span class="id" title="var">_</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">S</span> (<span class="id" title="var">S</span> <span class="id" title="var">n'</span>) ⇒ <span class="id" title="var">_</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>).<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">_</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">even0</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">set</span> (<span class="id" title="var">o3</span> := <span class="id" title="var">odd3</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">odd</span> <span class="id" title="tactic">in</span> <span class="id" title="var">o3</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">unfold</span> <span class="id" title="var">even</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">k</span> <span class="id" title="var">eq</span>].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">k</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">O_neq_suc</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">eq'</span> : <span class="id" title="var">S</span> (<span class="id" title="var">k</span> + <span class="id" title="var">S</span> (<span class="id" title="var">k</span> + 0)) = <span class="id" title="var">S</span> (<span class="id" title="var">S</span> (<span class="id" title="var">k</span> + <span class="id" title="var">k</span>))).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">ring</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq'</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">eq'</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">suc_inj</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">suc_inj</span> <span class="id" title="tactic">in</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">k</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">ring</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">odd_odd_suc_suc</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="var">odd</span> <span class="id" title="var">n</span> → <span class="id" title="var">odd</span> (<span class="id" title="var">S</span> (<span class="id" title="var">S</span> <span class="id" title="var">n</span>)).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span> <span class="id" title="keyword">using</span> <span class="id" title="var">strong_nat_ind</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">o</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">set</span> (<span class="id" title="var">e0</span> := <span class="id" title="var">even0</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">odd3</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">assert</span> (<span class="id" title="var">lt</span> : <span class="id" title="var">n</span> &lt; <span class="id" title="var">S</span> (<span class="id" title="var">S</span> <span class="id" title="var">n</span>)).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_S</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="tactic">in</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">e</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">o</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">even_suc_suc_even</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">e</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">e</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">o</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">even_even_suc_suc</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">e</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">odd_suc_suc_odd</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="var">odd</span> (<span class="id" title="var">S</span> (<span class="id" title="var">S</span> <span class="id" title="var">n</span>)) → <span class="id" title="var">odd</span> <span class="id" title="var">n</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">n</span> ⇒ <span class="id" title="keyword">match</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0 ⇒ <span class="id" title="var">_</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 1 ⇒ <span class="id" title="var">_</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">S</span> (<span class="id" title="var">S</span> <span class="id" title="var">n'</span>) ⇒ <span class="id" title="var">_</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>).<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">set</span> (<span class="id" title="var">e2</span> := <span class="id" title="var">even2</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">o2</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">odd</span> <span class="id" title="tactic">in</span> <span class="id" title="var">o2</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">_</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">odd1</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">unfold</span> <span class="id" title="var">odd</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">ne</span> <span class="id" title="var">e</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">ne</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">even</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">even</span> <span class="id" title="tactic">in</span> <span class="id" title="var">e</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">e</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">k</span> <span class="id" title="var">eq</span>].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">k</span> + 1).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">ring</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">even_then_suc_odd</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="var">even</span> <span class="id" title="var">n</span> → <span class="id" title="var">odd</span> (<span class="id" title="var">S</span> <span class="id" title="var">n</span>).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span> <span class="id" title="keyword">using</span> <span class="id" title="var">strong_nat_ind</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">e</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">odd</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">e'</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">set</span> (<span class="id" title="var">o1</span> := <span class="id" title="var">odd1</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">odd</span> <span class="id" title="tactic">in</span> <span class="id" title="var">o1</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">assert</span> (<span class="id" title="var">lt</span> : <span class="id" title="var">n</span> &lt; <span class="id" title="var">S</span> <span class="id" title="var">n</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="tactic">in</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">unfold</span> <span class="id" title="var">odd</span> <span class="id" title="tactic">in</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">even_suc_suc_even</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">e'</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">odd_then_suc_even</span> :<br />
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">n</span>, <span class="id" title="var">odd</span> <span class="id" title="var">n</span> → <span class="id" title="var">even</span> (<span class="id" title="var">S</span> <span class="id" title="var">n</span>).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span> <span class="id" title="keyword">using</span> <span class="id" title="var">strong_nat_ind</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">o</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">set</span> (<span class="id" title="var">e0</span> := <span class="id" title="var">even0</span>).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">odd</span> <span class="id" title="tactic">in</span> <span class="id" title="var">o</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">even2</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">assert</span> (<span class="id" title="var">lt</span> : <span class="id" title="var">n</span> &lt; <span class="id" title="var">S</span> (<span class="id" title="var">S</span> <span class="id" title="var">n</span>)).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_S</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">le_n</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="tactic">in</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">unfold</span> <span class="id" title="var">even</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">even</span> <span class="id" title="tactic">in</span> <span class="id" title="var">lt</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">lt</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">k</span> <span class="id" title="var">eq</span>].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">k</span> + 1).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">eq</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">ring</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <span class="id" title="var">odd_suc_suc_odd</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">o</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+
+<br />
+</div>
+
+<div class="doc">
+   In terms of what can be proved, strong induction and
+   regular induction have the same strength. In fact, we
+   defined strong induction completely in terms of regular
+   induction. The only difference is that strong induction
+   gives us a stronger induction hypothesis, making
+   proofs more convenient sometimes.
+ 
+</div>
+<div class="code">
+
+<br />
+<span class="id" title="keyword">End</span> <span class="id" title="keyword">Induction</span>.<br />
+</div>
+
+
+      <div id="footer">
+        <hr />This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+      </div>
+    </div>
+  </body>
+</html>
