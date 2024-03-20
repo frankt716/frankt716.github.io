@@ -1,28 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../css/coqdoc.css" rel="stylesheet" type="text/css" />
-<title>PropositionalLogic</title>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../css/coqdoc.css" rel="stylesheet" type="text/css" />
+    <title>PropositionalLogic</title>
+  </head>
 
-<body>
+  <body>
+    <div id="main">
 
-<div id="page">
-
-<div id="header">
-</div>
-
-<div id="main">
-
-<h1 class="libtitle">PropositionalLogic</h1>
-
-<div class="code">
+      <h1 class="libtitle">PropositionalLogic</h1>
+      <div class="code">
 </div>
 
 <div class="doc">
-<a id="lab23"></a><h1 class="section">Propositional Logic</h1>
+<a id="lab1"></a><h1 class="section">Propositional Logic</h1>
 
 <ul class="doclist">
 <li> A formal language + deduction rules
@@ -35,7 +27,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab24"></a><h1 class="section">Formal language</h1>
+<a id="lab2"></a><h1 class="section">Formal language</h1>
 
 <ul class="doclist">
 <li> Logical symbols: <span class="inlinecode"><span class="id" title="var">True</span></span>, <span class="inlinecode"><span class="id" title="var">False</span></span>, <span class="inlinecode">∧</span>, <span class="inlinecode">∨</span>, <span class="inlinecode">→</span>
@@ -63,7 +55,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab25"></a><h1 class="section">How to read props</h1>
+<a id="lab3"></a><h1 class="section">How to read props</h1>
 
 <ul class="doclist">
 <li> Right associative
@@ -76,7 +68,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab26"></a><h1 class="section">Deduction rules</h1>
+<a id="lab4"></a><h1 class="section">Deduction rules</h1>
 
     The meaning of a logical symbol is given by
 <ul class="doclist">
@@ -90,7 +82,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab27"></a><h1 class="section">Computational content</h1>
+<a id="lab5"></a><h1 class="section">Computational content</h1>
 
 <ul class="doclist">
 <li> Props as data types.
@@ -115,7 +107,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab28"></a><h1 class="section"><span class="inlinecode"><span class="id" title="var">True</span></span> (comp: trivial computation, logic: true)</h1>
+<a id="lab6"></a><h1 class="section"><span class="inlinecode"><span class="id" title="var">True</span></span> (comp: trivial computation, logic: true)</h1>
 
 <ul class="doclist">
 <li> Introduction:
@@ -136,7 +128,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab29"></a><h1 class="section"><span class="inlinecode"><span class="id" title="var">False</span></span> (comp: impossible computation, logic: false)</h1>
+<a id="lab7"></a><h1 class="section"><span class="inlinecode"><span class="id" title="var">False</span></span> (comp: impossible computation, logic: false)</h1>
 
 <ul class="doclist">
 <li> Introduction: none
@@ -157,7 +149,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab30"></a><h1 class="section"><span class="inlinecode">∧</span>  (comp: pair, logic: and)</h1>
+<a id="lab8"></a><h1 class="section"><span class="inlinecode">∧</span>  (comp: pair, logic: and)</h1>
 
 <ul class="doclist">
 <li> Introduction:
@@ -187,7 +179,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab31"></a><h1 class="section"><span class="inlinecode">∨</span> (comp: variant, logic: or)</h1>
+<a id="lab9"></a><h1 class="section"><span class="inlinecode">∨</span> (comp: variant, logic: or)</h1>
 
 <ul class="doclist">
 <li> Introduction:
@@ -225,7 +217,7 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab32"></a><h1 class="section"><span class="inlinecode">→</span> (comp: function, logic: implication)</h1>
+<a id="lab10"></a><h1 class="section"><span class="inlinecode">→</span> (comp: function, logic: implication)</h1>
 
 <ul class="doclist">
 <li> Introduction: function abstraction
@@ -255,75 +247,75 @@
  
 <div class="paragraph"> </div>
 
-<a id="lab33"></a><h1 class="section">Examples</h1>
+<a id="lab11"></a><h1 class="section">Examples</h1>
 
  
 </div>
 <div class="code">
-<span class="id" title="keyword">Section</span> <span class="id" title="var">PropositionalLogic</span>.<br/>
-<span class="id" title="keyword">Variables</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">R</span> : <span class="id" title="keyword">Prop</span>.<br/>
+<span class="id" title="keyword">Section</span> <span class="id" title="var">PropositionalLogic</span>.<br />
+<span class="id" title="keyword">Variables</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">R</span> : <span class="id" title="keyword">Prop</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">curry_uncurry</span> : ((<span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span>) → <span class="id" title="var">R</span>) ↔ (<span class="id" title="var">P</span> → (<span class="id" title="var">Q</span> → <span class="id" title="var">R</span>)).<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">f</span> <span class="id" title="var">p</span> <span class="id" title="var">q</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">f</span> [<span class="id" title="var">p</span> <span class="id" title="var">q</span>].<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">curry_uncurry</span> : ((<span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span>) → <span class="id" title="var">R</span>) ↔ (<span class="id" title="var">P</span> → (<span class="id" title="var">Q</span> → <span class="id" title="var">R</span>)).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">f</span> <span class="id" title="var">p</span> <span class="id" title="var">q</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">f</span> [<span class="id" title="var">p</span> <span class="id" title="var">q</span>].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">and_uni</span> : (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span> ∧ <span class="id" title="var">R</span>) ↔ (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span>) ∧ (<span class="id" title="var">P</span> → <span class="id" title="var">R</span>).<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span> <span class="id" title="tactic">in</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">p</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">q</span> <span class="id" title="var">_</span>].<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span> <span class="id" title="tactic">in</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">p</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">_</span> <span class="id" title="var">r</span>].<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">f</span> <span class="id" title="var">g</span>] <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">g</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">and_uni</span> : (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span> ∧ <span class="id" title="var">R</span>) ↔ (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span>) ∧ (<span class="id" title="var">P</span> → <span class="id" title="var">R</span>).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">f</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span> <span class="id" title="tactic">in</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">p</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">q</span> <span class="id" title="var">_</span>].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span> <span class="id" title="tactic">in</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">p</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">_</span> <span class="id" title="var">r</span>].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">f</span> <span class="id" title="var">g</span>] <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">g</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">modus_tollens</span> : (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span>) → ¬ <span class="id" title="var">Q</span> → ¬ <span class="id" title="var">P</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">f</span> <span class="id" title="var">nq</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">nq</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">modus_tollens</span> : (<span class="id" title="var">P</span> → <span class="id" title="var">Q</span>) → ¬ <span class="id" title="var">Q</span> → ¬ <span class="id" title="var">P</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">f</span> <span class="id" title="var">nq</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">nq</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">resolution</span> : (<span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>) → (~ <span class="id" title="var">P</span> ∨ <span class="id" title="var">R</span>) → <span class="id" title="var">Q</span> ∨ <span class="id" title="var">R</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> | <span class="id" title="var">q</span>] [<span class="id" title="var">np</span> | <span class="id" title="var">r</span>].<br/>
-&nbsp;&nbsp;- <span class="id" title="var">contradiction</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">right</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">left</span>. <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="tactic">right</span></span>&nbsp;also&nbsp;works&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>. <span class="comment">(*&nbsp;resp.,&nbsp;<span class="inlinecode"><span class="id" title="tactic">exact</span></span> <span class="inlinecode"><span class="id" title="var">r</span></span>&nbsp;also&nbsp;works&nbsp;*)</span><br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-<span class="id" title="keyword">End</span> <span class="id" title="var">PropositionalLogic</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">resolution</span> : (<span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>) → (~ <span class="id" title="var">P</span> ∨ <span class="id" title="var">R</span>) → <span class="id" title="var">Q</span> ∨ <span class="id" title="var">R</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> | <span class="id" title="var">q</span>] [<span class="id" title="var">np</span> | <span class="id" title="var">r</span>].<br />
+&nbsp;&nbsp;- <span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">right</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">left</span>. <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="tactic">right</span></span>&nbsp;also&nbsp;works&nbsp;*)</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>. <span class="comment">(*&nbsp;resp.,&nbsp;<span class="inlinecode"><span class="id" title="tactic">exact</span></span> <span class="inlinecode"><span class="id" title="var">r</span></span>&nbsp;also&nbsp;works&nbsp;*)</span><br />
+<span class="id" title="keyword">Qed</span>.<br />
+<span class="id" title="keyword">End</span> <span class="id" title="var">PropositionalLogic</span>.<br />
 
-<br/>
+<br />
 </div>
 
 <div class="doc">
@@ -332,149 +324,148 @@
 
 </div>
 <div class="code">
-<span class="id" title="keyword">Set</span> <span class="id" title="keyword">Printing</span> <span class="id" title="var">Parentheses</span>.<br/>
-<span class="id" title="keyword">Section</span> <span class="id" title="var">AndExamples</span>.<br/>
-<span class="id" title="keyword">Variables</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">R</span> : <span class="id" title="keyword">Prop</span>.<br/>
+<span class="id" title="keyword">Set</span> <span class="id" title="keyword">Printing</span> <span class="id" title="var">Parentheses</span>.<br />
+<span class="id" title="keyword">Section</span> <span class="id" title="var">AndExamples</span>.<br />
+<span class="id" title="keyword">Variables</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">R</span> : <span class="id" title="keyword">Prop</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">proj1</span> : <span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span> → <span class="id" title="var">P</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> <span class="id" title="var">q</span>].<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">proj1</span> : <span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span> → <span class="id" title="var">P</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> <span class="id" title="var">q</span>].<br />
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="comment">(*&nbsp;<span class="inlinecode">∧</span>&nbsp;is&nbsp;/\&nbsp;*)</span><br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">proj2</span> : <span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span> → <span class="id" title="var">Q</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> <span class="id" title="var">q</span>].<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="comment">(*&nbsp;<span class="inlinecode">∧</span>&nbsp;is&nbsp;/\&nbsp;*)</span><br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">proj2</span> : <span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span> → <span class="id" title="var">Q</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> <span class="id" title="var">q</span>].<br />
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">and_comm</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span> → <span class="id" title="var">Q</span> ∧ <span class="id" title="var">P</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> <span class="id" title="var">q</span>].<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">and_comm</span> :<br />
+&nbsp;&nbsp;<span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span> → <span class="id" title="var">Q</span> ∧ <span class="id" title="var">P</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> <span class="id" title="var">q</span>].<br />
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">and_assoc</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">P</span> ∧ (<span class="id" title="var">Q</span> ∧ <span class="id" title="var">R</span>) → (<span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span>) ∧ <span class="id" title="var">R</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> [<span class="id" title="var">q</span> <span class="id" title="var">r</span>]].<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">and_assoc</span> :<br />
+&nbsp;&nbsp;<span class="id" title="var">P</span> ∧ (<span class="id" title="var">Q</span> ∧ <span class="id" title="var">R</span>) → (<span class="id" title="var">P</span> ∧ <span class="id" title="var">Q</span>) ∧ <span class="id" title="var">R</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> [<span class="id" title="var">q</span> <span class="id" title="var">r</span>]].<br />
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">and_addition</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">P</span> → <span class="id" title="var">P</span> ∧ <span class="id" title="var">P</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">and_addition</span> :<br />
+&nbsp;&nbsp;<span class="id" title="var">P</span> → <span class="id" title="var">P</span> ∧ <span class="id" title="var">P</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">End</span> <span class="id" title="var">AndExamples</span>.<br/>
+<br />
+<span class="id" title="keyword">End</span> <span class="id" title="var">AndExamples</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Section</span> <span class="id" title="var">OrExamples</span>.<br/>
-<span class="id" title="keyword">Variables</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">R</span> : <span class="id" title="keyword">Prop</span>.<br/>
+<br />
+<span class="id" title="keyword">Section</span> <span class="id" title="var">OrExamples</span>.<br />
+<span class="id" title="keyword">Variables</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">R</span> : <span class="id" title="keyword">Prop</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">or_comm</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span> → <span class="id" title="var">Q</span> ∨ <span class="id" title="var">P</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> | <span class="id" title="var">q</span>].<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">right</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">or_comm</span> :<br />
+&nbsp;&nbsp;<span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span> → <span class="id" title="var">Q</span> ∨ <span class="id" title="var">P</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> | <span class="id" title="var">q</span>].<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">right</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">or_assoc</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">P</span> ∨ (<span class="id" title="var">Q</span> ∨ <span class="id" title="var">R</span>) → (<span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>) ∨ <span class="id" title="var">R</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> | [<span class="id" title="var">q</span> | <span class="id" title="var">r</span>]].<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">left</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">right</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">right</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">or_assoc</span> :<br />
+&nbsp;&nbsp;<span class="id" title="var">P</span> ∨ (<span class="id" title="var">Q</span> ∨ <span class="id" title="var">R</span>) → (<span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>) ∨ <span class="id" title="var">R</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">p</span> | [<span class="id" title="var">q</span> | <span class="id" title="var">r</span>]].<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">left</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">left</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">right</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">right</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">r</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">noncontradiction</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">P</span> → ¬ ¬ <span class="id" title="var">P</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span> <span class="id" title="var">np</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">noncontradiction</span> :<br />
+&nbsp;&nbsp;<span class="id" title="var">P</span> → ¬ ¬ <span class="id" title="var">P</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">np</span>.<br />
+&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">demorgan</span> :<br/>
-&nbsp;&nbsp;¬ (<span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>) ↔ ¬ <span class="id" title="var">P</span> ∧ ¬ <span class="id" title="var">Q</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">left</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">q</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">right</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">np</span> <span class="id" title="var">nq</span>] [<span class="id" title="var">p</span> | <span class="id" title="var">q</span>].<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">contradiction</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">contradiction</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-<span class="id" title="keyword">End</span> <span class="id" title="var">OrExamples</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">demorgan</span> :<br />
+&nbsp;&nbsp;¬ (<span class="id" title="var">P</span> ∨ <span class="id" title="var">Q</span>) ↔ ¬ <span class="id" title="var">P</span> ∧ ¬ <span class="id" title="var">Q</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">f</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">left</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">intros</span> <span class="id" title="var">q</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">f</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">right</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">q</span>.<br />
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">np</span> <span class="id" title="var">nq</span>] [<span class="id" title="var">p</span> | <span class="id" title="var">q</span>].<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">contradiction</span>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">contradiction</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
+<span class="id" title="keyword">End</span> <span class="id" title="var">OrExamples</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Section</span> <span class="id" title="var">IffExamples</span>.<br/>
-<span class="id" title="keyword">Variables</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> : <span class="id" title="keyword">Prop</span>.<br/>
+<br />
+<span class="id" title="keyword">Section</span> <span class="id" title="var">IffExamples</span>.<br />
+<span class="id" title="keyword">Variables</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> : <span class="id" title="keyword">Prop</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">iff_refl</span> :<br/>
-&nbsp;&nbsp;<span class="id" title="var">P</span> ↔ <span class="id" title="var">P</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">and_addition</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">iff_refl</span> :<br />
+&nbsp;&nbsp;<span class="id" title="var">P</span> ↔ <span class="id" title="var">P</span>.<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">and_addition</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">p</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">p</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">iff_sym</span> :<br/>
-&nbsp;&nbsp;(<span class="id" title="var">P</span> ↔ <span class="id" title="var">Q</span>) → (<span class="id" title="var">Q</span> ↔ <span class="id" title="var">P</span>).<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">and_comm</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
+<br />
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">iff_sym</span> :<br />
+&nbsp;&nbsp;(<span class="id" title="var">P</span> ↔ <span class="id" title="var">Q</span>) → (<span class="id" title="var">Q</span> ↔ <span class="id" title="var">P</span>).<br />
+<span class="id" title="keyword">Proof</span>.<br />
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">and_comm</span>.<br />
+<span class="id" title="keyword">Qed</span>.<br />
 
-<br/>
-<span class="id" title="keyword">End</span> <span class="id" title="var">IffExamples</span>.<br/>
-</div>
-</div>
-
-<div id="footer">
-<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+<br />
+<span class="id" title="keyword">End</span> <span class="id" title="var">IffExamples</span>.<br />
 </div>
 
-</div>
 
-</body>
+      <div id="footer">
+        <hr />This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+      </div>
+    </div>
+  </body>
 </html>
