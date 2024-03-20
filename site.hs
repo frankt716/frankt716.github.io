@@ -2,11 +2,25 @@
 {-# LANGUAGE OverloadedStrings #-}
 import Data.Monoid (mappend)
 import Hakyll
+import System.Process
 --------------------------------------------------------------------------------
 config :: Configuration
 config = defaultConfiguration
   { destinationDirectory = "docs"
   }
+
+coqdocCompiler :: Compiler (Item String)
+coqdocCompiler = do
+  coq_filename <- toFilePath <$> getUnderlying
+  body <- unsafeCompiler $
+    readProcess "coqdoc" [ "--no-index"
+                         , "--stdout"
+                         , "--body-only"
+                         , "--parse-comments"
+                         , "-utf8"
+                         , "-s"
+                         , coq_filename ] ""
+  makeItem body
 
 main :: IO ()
 main = hakyllWith config $ do
@@ -18,9 +32,11 @@ main = hakyllWith config $ do
     route   idRoute
     compile compressCssCompiler
 
-  match "rsc/*" $ do
-    route   idRoute
-    compile copyFileCompiler
+  match "rsc/*.v" $ do
+    route $ setExtension "html"
+    compile $ coqdocCompiler
+      >>= loadAndApplyTemplate "templates/coqdoc.html" defaultContext
+      >>= relativizeUrls
 
   match "posts/*" $ do
     route $ setExtension "html"
