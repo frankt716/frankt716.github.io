@@ -32,10 +32,6 @@ main = hakyllWith config $ do
     route   idRoute
     compile compressCssCompiler
 
-  -- match "rsc/*" $ do
-  --   route   idRoute
-  --   compile copyFileCompiler
-
   match "rsc/*.v" $ do
     route $ setExtension "html"
     compile $ coqdocCompiler
