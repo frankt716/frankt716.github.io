@@ -59,6 +59,11 @@ main = hakyllWith config $ do
       >>= loadAndApplyTemplate "templates/coqdoc.html" defaultContext
       >>= relativizeUrls
 
+  -- match "posts/*.pdf" $ do
+  --   route $ idRoute
+  --   compile $ copyFileCompiler -- :: Compiler (Item CopyFile)
+  --     >>= \cpfi -> return $ fmap show cpfi
+
   -- match "posts/*" $ do
   --   route $ setExtension "html"
   --   compile $ pandocCompiler
