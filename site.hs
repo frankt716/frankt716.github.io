@@ -50,19 +50,15 @@ main = hakyllWith config $ do
     route   idRoute
     compile compressCssCompiler
 
-  match "rsc/*.v" $ do
-    compile $ coqdocCompiler
-
-  match "posts/*.coqpost" $ do
+  match "posts/*.v" $ do
     route $ setExtension "html"
-    compile $ coqPostCompiler
+    compile $ coqdocCompiler
       >>= loadAndApplyTemplate "templates/coqdoc.html" defaultContext
       >>= relativizeUrls
 
-  -- match "posts/*.pdf" $ do
-  --   route $ idRoute
-  --   compile $ copyFileCompiler -- :: Compiler (Item CopyFile)
-  --     >>= \cpfi -> return $ fmap show cpfi
+  match "posts/*.pdf" $ do
+    route $ idRoute
+    compile $ copyFileCompiler
 
   -- match "posts/*" $ do
   --   route $ setExtension "html"
@@ -88,9 +84,9 @@ main = hakyllWith config $ do
   match "index.html" $ do
     route idRoute
     compile $ do
-      posts <- recentFirst =<< loadAll "posts/*"
+      posts <- loadAll "posts/*"
       let indexCtx =
-            listField "posts" postCtx (return posts)       `mappend`
+            listField "posts" defaultContext (return posts)       `mappend`
             defaultContext
 
       getResourceBody
